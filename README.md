@@ -4,4 +4,4 @@
 
 先新建一个donate_google的数据库，再运行DATABASE里的SQL文件
 
-![image-20200605120517868](README_pic/image-20200605120517868.png)
+![image-20200605120517868](README_pic/sql.png)
