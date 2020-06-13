@@ -5,3 +5,5 @@
 先新建一个donate_google的数据库，再运行DATABASE里的SQL文件
 
 ![image-20200605120517868](README_pic/sql.png)
+<br>
+前端 vue+element [姜雅婷]
