@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>history</title>
+	
+	<style>
+		*{margin: 0;padding: 0; position: absolute}
+		body{transform: scale(1.2);}
+	</style>
+</head>
+
+<body style="background-color: #F1F1F1">
+	<div style="float: left; width: 700px; height: 200px">
+		
+		<div style="height: 200px; width:700px;
+					background-color: white;">
+					<table class="quickTable" id="quickTable" height="300px" width="700px" cellspacing="0" >
+					<tr class="dataRow" style="height: 60px;width:700px;background-color: #C4C4C4">
+						<td style="column-span: all;height: 60px;width:700px;background-color: #C4C4C4;">
+							<span style="font-size: 12px;margin-top: 20px;margin-left: 10px;width: 60px">
+								<b>搜索条件</b>
+							</span>
+						</td>
+					</tr>
+					<tr class="dataRow" style="margin-top: 40px">
+						<td style="height: 200px;width:50px;margin-left: 10px;margin-top:40px;font-size:12px;">
+							<input type="text" width="70px" style="border-radius: 9px;height: 35px;border-width: thin;font-size: 12px"  placeholder="请输入项目名称"/>
+						</td>
+						<td style="height: 200px;width:70px;margin-left: 150px;margin-top:40px;font-size:12px;">
+							<input type="text" style="border-radius: 9px;width=70px;height: 35px;border-width: thin;font-size: 12px"  placeholder="请选择物资类型"/>
+						</td>
+						<td style="height: 200px;width:222px;margin-left: 290px;margin-top:40px;font-size: 12px;">
+							<span style="width: 100px;margin-left: 20px;margin-top:10px"><b>审核状态</b></span>
+							<select id="sh" style="margin-left: 75px;height: 35px;border-width: thin;border-radius: 9px">
+							  <option value ="1">全部</option>
+							  <option value ="2">审核中</option>
+							</select>
+							<span style="width: 100px;margin-left: 150px;margin-top:10px"><b>物流状态</b></span>
+							  <select id="wl" style="margin-left: 205px;height: 35px;border-width: thin;border-radius: 9px">
+								  <option value="1">全部</option>
+								  <option value="2">审核中</option>
+							  </select>
+							<span style="width: 100px;margin-left: 280px;margin-top:10px"><b>每页显示</b></span>
+							  <select id="my" style="margin-left: 335px;height: 35px;border-width: thin;border-radius: 9px">
+								  <option value="1">5</option>
+								  <option value="2">10</option>
+							  </select>
+						</td>
+					</tr>
+					<tr class="dataRow" style="margin-top: 140px">
+						<td style="height: 200px;width:700px;margin-left: 10px;font-size:12px;">
+							<input type="submit" value="确定" style="height: 40px; width: 120px; background-color: orangered;border: none;color: white;border-radius:9px;"/>
+						</td>
+					</tr>
+				</table>
+		</div>
+	</div>
+	<div style="height: 600px; width: 700px; margin-top: 250px;
+					background-color: white">
+		<table class="quickTable"  height="300px" width="700px" cellspacing="0" >
+					<tr class="dataRow" style="height: 60px;width:700px;background-color: #C4C4C4">
+						<td style="column-span: all;height: 60px;width:700px;background-color: #C4C4C4;">
+							<span style="font-size: 12px;margin-top: 20px;margin-left: 10px;width: 80px">
+								<b>历史捐赠信息</b>
+							</span>
+						</td>
+					</tr>
+			<tr class="dataRow" style="margin-top: 50px">
+				<td>
+					<div id="top_line">
+						<hr style="margin-top: 30px;margin-left: 15px; width:670px"/>
+						<p style="margin-left: 20px;margin-top: 40px"><font size="-2"><b style="width: 80px">编号</b></font></p>
+						<p style="margin-left: 60px;margin-top: 40px"><font size="-2"><b style="width: 80px">项目名称</b></font></p>
+						<p style="margin-left: 140px;margin-top: 40px"><font size="-2"><b style="width: 80px">项目缩略图</b></font></p>
+						<p style="margin-left: 280px;margin-top: 40px"><font size="-2"><b style="width: 80px">物资类型</b></font></p>
+						<p style="margin-left: 420px;margin-top: 40px"><font size="-2"><b style="width: 80px">审核状态</b></font></p>
+						<p style="margin-left: 520px;margin-top: 40px"><font size="-2"><b style="width: 80px">物流状态</b></font></p>
+						<p style="margin-left: 600px;margin-top: 40px"><font size="-2"><b style="width: 80px">操作</b></font></p>
+						<hr style="margin-top: 60px;margin-left: 15px; width:670px"/>
+					</div>
+				</td>
+			</tr>
+			<tr class="dataRow" style="margin-top: 130px">
+				<td>
+					<div id="mess_line" style="margin-top: 40px;font-size:10px">
+						<div id="message">
+							<hr style="margin-top: 65px;margin-left: 15px; width: 670px"/>
+							<p style="margin-left: 20px;width: 40px"><font size="-2">1</font></p>
+							<p style="margin-left: 60px;width: 80px"><font size="-2">XXXXXX</font></p>
+							<img src="./hospital.jpg" width="100px" height="100px" style="margin-left: 140px;margin-top: -50px"/>
+							<p style="margin-left: 280px;width: 80px"><font size="-2">口罩 XX个</font></p>
+							<p style="margin-left: 420px;width: 80px"><font size="-2">审核通过</font></p>
+							<p style="margin-left: 520px;width: 80px"><font size="-2">已发出</font></p>
+							<a href="#" style="margin-left: 600px;margin-top: -30px;text-decoration: none;color:green;width: 80px">
+								填写物流编号</a>
+							<a href="./checkproject.html" style="margin-left: 600px;margin-top: 10px;text-decoration: none;color:green;width: 80px">
+								查看项目进度</a>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

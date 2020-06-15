@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>personal_center</title>
+	
+	<script>
+		
+		function rtablehide(){
+			var rtable = document.getElementById("rtable");
+			rtable.style.display = "none";
+			var wtable = document.getElementById("wtable");
+			wtable.style.display = "block";
+		}
+		
+		function wtablehide(){
+			var rtable = document.getElementById("rtable");
+			rtable.style.display = "block";
+			var wtable = document.getElementById("wtable");
+			wtable.style.display = "none";
+		}
+		
+	</script>
+	
+	<style>
+		*{margin: 0;padding: 0; position: absolute}
+		body{transform: scale(1.2);}
+		.dataRow{
+			height: 60px;
+		}
+	</style>
+	
+</head>
+
+<body style="background-color: #F1F1F1">
+	
+	<!--header-->
+<!--	<div style="padding: 0;margin: 0; width: 100%; height: 70px; background-color: white">
+		<div style="float: left; width: 85%; height: 70px; padding-left: 60px; padding-top: 20px">
+			<h2>个人中心</h2>
+		</div>
+		<div style="float: left; padding-top: 25px;">
+			<a href="#" style="color:red; text-decoration: none;">退出登陆</a>
+		</div>
+	</div>
+-->	
+	
+	<!--左边按钮-->
+<!--	<div>
+		<div style="float: left; height: 260px; 
+					width: 20%;
+    				margin: 50px; background-color:white">
+			<div style="height: 35px;text-align: center; padding-top: 15px">
+				<a href="#" style="text-decoration: none; color: black">爱心值</a>
+			</div>
+			<div>
+				<hr/>
+			</div>
+			<div style="height: 35px;margin: 0px;text-align: center; padding-top: 15px">
+				<a href="#" style="text-decoration: none; color: black">历史捐赠信息查询</a>
+			</div>
+			<div>
+				<hr/>
+			</div>
+			<div style="height: 35px;margin: 0px;text-align: center; padding-top: 15px; 
+						background-color: orangered; color: white">
+				<a href="#" style="text-decoration: none; color: black">个人信息</a>
+			</div>
+			<div>
+				<hr/>
+			</div>
+			<div style="height: 35px;margin: 0px;text-align: center; padding-top: 15px">
+				<a href="#" style="text-decoration: none; color: black">捐赠意向提交</a>
+			</div>
+			<div>
+				<hr/>
+			</div>
+			<div style="height: 35px;margin: 0px;text-align: center; padding-top: 15px">
+				<a href="#" style="text-decoration: none; color: black">消息列表</a>
+			</div>
+		</div>
+-->		
+		<div style="float: left; width: 700px; height: 1000px">
+			<div style="height: 100px; width:700px;
+					background-color: white">
+				<div style="height: 45px;width:80px; margin-left: 20px;">
+					<p style="height: 45px;width:100px;margin-top:15px"><font size="+2">个人信息</font></p>
+				</div>
+				<div>
+					<hr style="width: 670px;margin-top: 55px;margin-left: 15px"/>
+				</div>
+				<div style="height: 35px;margin-left: 20px;margin-top: 65px;">
+					<a href="#" style="text-decoration: none; color: black;height: 35px;width:100px;" onClick="wtablehide()">
+						信息查看
+					</a>
+					<a href="#" style="text-decoration: none; color: red;height: 45px;width:100px;margin-left: 100px" onClick="rtablehide()">
+						信息修改
+					</a>
+				</div>
+			</div>
+			<div style="height: 600px; width: 700px; margin-top: 150px;
+					background-color: white">
+				<div style="margin-left: 50px;height: 600px; width:700px" id="perinfo">
+				<table class="quickTable" id="rtable" width="500px" height="700px">
+					<tr class="dataRow">
+					  <td width="250px" style="margin-top: 50px">用户账号：</td>
+					  <td width="250px" style="margin-top: 50px; margin-left: 200px">XXX-XXXX-XXXX(手机号）</td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 100px">姓名：</td>
+					  <td width="500px" style="margin-top: 100px; margin-left: 200px">XXX</td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 150px">身份证号：</td>
+					  <td width="500px" style="margin-top: 150px; margin-left: 200px">（18位）</td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 200px">地址：</td>
+					  <td width="500px" style="margin-top: 200px; margin-left: 200px">XXX省   XX市</td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 250px">详细地址：</td>
+					  <td width="500px" style="margin-top: 250px; margin-left: 200px">
+						  <p >xx区</p>
+						  <p style="margin-top: 30px">xx路</p>
+						  <p style="margin-top: 60px">xx小区</p>
+						  <p style="margin-top: 90px">xx栋xx号</p>
+					  </td>
+					</tr>
+				</table>
+				
+				<div id="wtable" style="display: none;height: 600px; width:700px">
+				<table class="quickTable" width="500px" height="700px">
+					<tr class="dataRow">
+					  <td width="250px" style="margin-top: 50px">用户账号：</td>
+					  <td width="250px" style="margin-top: 50px; margin-left: 200px"><input type="text"/></td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 100px">姓名：</td>
+					  <td width="250px" style="margin-top: 100px; margin-left: 200px"><input type="text"/></td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 150px">身份证号：</td>
+					  <td width="250px" style="margin-top: 150px; margin-left: 200px"><input type="text"/></td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 200px">地址：</td>
+					  <td width="250px" style="margin-top: 200px; margin-left: 200px">
+						  <select id="province">
+							  <option value="-1">------请选择------</option>
+							  <option value="1">广东省</option>
+						  </select>
+						  <select id="city" style="margin-left: 200px">
+							  <option value="-1">------请选择------</option>
+							  <option value="1">广州市</option>
+							  <option value="2">深圳市</option>
+						  </select>
+					  </td>
+					</tr>
+					<tr class="dataRow">
+					  <td width="500px" style="margin-top: 250px">详细地址：</td>
+					  <td width="250px" style="margin-top: 250px; margin-left: 200px">
+						<input type="text" style="width:200px;height:100px"/>
+					  </td>
+					</tr>
+				</table>
+					<input type="submit" value="确认更改" style="height: 30px; width: 120px; background-color: orangered;border: none;color: white;border-radius:9px;margin-top: 500px;"/>
+					<input type="button" value="取消" style="height: 30px; width: 120px;border:none;border-radius:9px;margin-left: 240px;margin-top:500px"/>
+				</div>
+					
+				</div>
+				
+			</div>
+		</div>
+	
+</body>
+</html>
