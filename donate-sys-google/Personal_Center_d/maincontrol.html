@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>个人中心</title>
+	<script>
+		var index=3;
+		
+		function setcolcolor(){
+			if (index==1){
+				var box = document.getElementById("AXZ");
+				var text = document.getElementById("axz");
+				box.style.backgroundColor = "white";
+				text.style.color = "black";
+			}
+			if (index==2){
+				var box = document.getElementById("LS");
+				var text = document.getElementById("ls");
+				box.style.backgroundColor = "white";
+				text.style.color = "black";
+			}
+			if (index==3){
+				var box = document.getElementById("GR");
+				var text = document.getElementById("gr");
+				box.style.backgroundColor = "white";
+				text.style.color = "black";
+			}
+			if (index==4){
+				var box = document.getElementById("JZ");
+				var text = document.getElementById("jz");
+				box.style.backgroundColor = "white";
+				text.style.color = "black";
+			}
+			if (index==5){
+				var box = document.getElementById("XX");
+				var text = document.getElementById("xx");
+				box.style.backgroundColor = "white";
+				text.style.color = "black";
+			}
+		}
+		
+		function setorange(i,bo,tex){
+			setcolcolor();
+			index=i;
+			var box = document.getElementById(bo);
+			var text = document.getElementById(tex);
+			box.style.backgroundColor = "orangered";
+			text.style.color = "white";
+		}
+		
+		function setpage(url){
+			var page = document.getElementById("tobedetermined");
+			page.src = url;
+		}
+	</script>
+	
+	<style>
+		*{margin: 0;padding: 0;position: absolute}
+	</style>
+</head>
+
+	
+<body style="background-color: #F1F1F1">
+	
+	<div style="width: 2000px; height: 70px; background-color: white">
+		<div style="float: left; width: 800px; height: 70px; padding-left: 60px; padding-top: 20px">
+			<h2>个人中心</h2>
+		</div>
+		<div style="float: left; padding-top: 25px;">
+			<a href="#" style="color:red; text-decoration: none; height: 70px; width: 200px; padding-left: 1000px">退出登陆</a>
+		</div>
+	</div>
+	
+	<div>
+		<div style="float: left; height: 260px; 
+					width: 300px;
+    				margin: 50px; background-color:white;margin-top: 120px;">
+			<div style="height: 51px;width: 300px; margin-top: 0px" id="AXZ">
+				<a href="#" style="text-decoration: none; color: black; margin-top: 17px; margin-left: 130px" id="axz" onClick="setorange(1,'AXZ','axz');setpage('./love.html')">
+					爱心值
+				</a>
+			</div>
+			<div>
+				<hr style="width: 300px;margin-top: 52px"/>
+			</div>
+			<div style="height: 52px;width: 300px;margin-top: 53px" id="LS">
+				<a href="#" style="text-decoration: none; color: black;margin-top: 17px; margin-left: 90px" id="ls" onClick="setorange(2,'LS','ls');setpage('./history.html')">
+					历史捐赠信息查询
+				</a>
+			</div>
+			<div>
+				<hr style="width: 300px;margin-top: 104px"/>
+			</div>
+			<div style="height: 52px;width: 300px;margin-top: 105px; 
+						background-color: orangered; color: white" id="GR">
+				<a href="#" style="text-decoration: none; color: black;margin-top: 17px; margin-left: 120px" id="gr" onClick="setorange(3,'GR','gr');setpage('./personal_center.html')">
+					个人信息
+				</a>
+			</div>
+			<div>
+				<hr style="width: 300px;margin-top: 156px"/>
+			</div>
+			<div style="height: 52px;width: 300px;margin-top: 157px" id="JZ">
+				<a href="#" style="text-decoration: none; color: black;margin-top: 17px; margin-left: 100px" id="jz" onClick="setorange(4,'JZ','jz');setpage('./devote.html')">
+					捐赠意向提交
+				</a>
+			</div>
+			<div>
+				<hr style="width: 300px;margin-top: 208px"/>
+			</div>
+			<div style="height: 52px;width: 300px;margin-top: 209px" id="XX">
+				<a href="#" style="text-decoration: none; color: black;margin-top: 17px; margin-left: 120px" id="xx" onClick="setorange(5,'XX','xx');setpage('./message.html')">
+					消息列表
+				</a>
+			</div>
+		</div>
+	</div>
+	
+	<div id="html_gr" style="margin-left: 450px;margin-top: 120px">
+		<iframe align="center" width="950" height="1250" src="./personal_center.html" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" id = "tobedetermined">
+		</iframe>
+	</div>
+	
+	
+	
+</body>
+</html>

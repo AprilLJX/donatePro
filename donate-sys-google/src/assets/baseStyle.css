@@ -1,0 +1,107 @@
+
+#simulator .group, #simulator .ppanel {
+  /* 未设置链接的母版/组合不接收鼠标事件, 以防遮挡底部有链接的组件 */
+  pointer-events: none;
+}
+#simulator .group.clickable, #simulator .ppanel.clickable {
+  pointer-events: auto;
+}
+#simulator .group .widget, #simulator .ppanel .widget {
+  /* 内部元素均需要设回pe, 以保证全局手势正常 */
+  pointer-events: auto;
+}
+#simulator .group.invisible, #simulator .ppanel.invisible {
+  pointer-events: none;
+}
+#simulator .group.invisible *, #simulator .ppanel.invisible * {
+  pointer-events: none !important;
+}
+/*Home Page*/
+/*轮播图*/
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+.image-wrapper span {
+  background: #e8e8e8;
+  height: 100%;
+  width: 100%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: inherit;
+}
+.image-wrapper span i {
+  font-size: 26px;
+}
+.image-wrapper span .icon {
+  color: #8d9ea7;
+}
+.image-wrapper .wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+.image-wrapper .wrapper img {
+  width: 100%;
+  border-radius: inherit;
+  -webkit-transition: inherit;
+  transition: inherit;
+  pointer-events: none;
+}
+.widget {
+  position: absolute;
+}
+.widget.highlight {
+  opacity: 0.5 !important;
+  background-color: rgba(223, 140, 0, 0.3) !important;
+}
+.widget.tdunderline .text {
+  text-decoration: underline;
+}
+.widget.tdoverline .text {
+  text-decoration: overline;
+}
+.widget.tdline-through .text {
+  text-decoration: line-through;
+}
+.widget .template {
+  display: none;
+}
+.widget.line {
+  pointer-events: none;
+}
+.widget.line svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+.widget.line svg > path {
+  -webkit-transition: inherit;
+  transition: inherit;
+}
+.image_view {
+  z-index: 3;
+  overflow: hidden;
+  color: #bec2c9;
+  border-style: solid;
+}
+.image_view.highlight span, .image_view.highlight .wrapper {
+  opacity: 0.5;
+}
