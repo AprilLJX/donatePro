@@ -61,7 +61,7 @@ export default {
     },
 	gotoPersonal() {
 	  //直接跳转到个人中心
-      this.$router.push('/personalcenter');
+      this.$router.push('/Maincontrol');
 	}
   }
 }
@@ -73,7 +73,7 @@ export default {
 				margin: 0;
 				border: 0px;
 				padding: 0;
-				background: url("./login.png") no-repeat;
+				background: url("../../assets/login.png") no-repeat;
 				background-size: cover;
 				height: 100%;
 				width: 100%;
