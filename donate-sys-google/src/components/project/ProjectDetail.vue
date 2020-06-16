@@ -261,7 +261,7 @@ export default {
       gotoDonate() {
         //直接跳转
         window.console.log("跳转填写页");
-        this.$router.push('/projectDetail/donateList/finished');
+        this.$router.push('/projectDetail/donateList');
       }
   }
 }
@@ -290,7 +290,6 @@ export default {
   }
   .footprint_titel{
     line-height: 23px;
-    font-size: 20px;
     font-size: 20px;
     color: crimson;
     text-align: center!important;

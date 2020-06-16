@@ -44,7 +44,7 @@
       <div data-type="top_title2" style="display: table">
         <div class="widget svg_icon_path clickable" style="display: table-cell">
           <span class="icon svg-icon-wrap svg-fa5 svg-fa5-sign-in-alt-fas-wrap"
-                style="width: 24px; height: 24px; min-width: 24px; min-height: 24px;">
+                style="width: 24px; height: 24px; min-width: 24px; min-height: 24px;" @click="gotoLogin()">
             <svg v-if="if_logo" xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="64 64 896 896" width="27"
                  height="27"
                  style="fill: rgb(16, 16, 16);">
@@ -84,6 +84,10 @@ export default {
     gotoProjectList() {
       //直接跳转
       this.$router.push('/projectList');
+    },
+    gotoLogin() {
+      //直接跳转到个人中心
+      this.$router.push('/login');
     }
   }
 }

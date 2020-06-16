@@ -2,7 +2,7 @@
   <div class= "findpassword">
 	<div id="stage1" v-show="fir">
 	<div style="position: absolute">
-		<img src="./fp1.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
+		<img src="../../assets/fp1.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
 	</div>
 	
 	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 40%;background-color: white;border: 2px solid pink;border-radius: 5px">
@@ -29,7 +29,7 @@
 	
 	<div id="stage2" v-show="sec">
 	<div style="position: absolute">
-		<img src="./fp2.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
+		<img src="../../assets/fp2.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
 	</div>
 	
 	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 40%;background-color: white;border: 2px solid pink;border-radius: 5px">
@@ -55,7 +55,7 @@
 	
 	<div id="stage3" v-show="thir">
 	<div style="position: absolute">
-		<img src="./fp3.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
+		<img src="../../assets/fp3.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
 	</div>
 	
 	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 40%;">
@@ -100,7 +100,7 @@ export default {
 				margin: 0;
 				border: 0px;
 				padding: 0;
-				background: url("./bg.png") no-repeat;
+				background: url("../../assets/bg.png") no-repeat;
 				background-size: cover;
 				height: 100%;
 				width: 100%;
