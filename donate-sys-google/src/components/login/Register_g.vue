@@ -1,141 +1,276 @@
 <template>
-  <div class= "register_g">
+  <div>
+	<el-header>
+      <div id="top">
+        <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      </div>
+    </el-header>
+	<div id="top" style="margin-top:-50px">
+	  <el-divider></el-divider>
+	</div>
+    <el-main>
+  <div class= "register_d" style="height: 800px">
 	<div id="stage1" v-show="fir">
-	<div style="position: absolute">
-		<img src="../../assets/rg1.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
+	<el-steps :space="500"  :active="0" finish-status="success"  align-center style="margin-top:30px">
+		<el-step title="进行中" description="实名制认证"></el-step>
+		<el-step title="步骤 2" description="信息填写"></el-step>
+		<el-step title="步骤 3" description="注册成功"></el-step>
+	</el-steps>
+	<el-col :span="8" :offset="8">
+	<div style="border: 1px solid pink;width: 100%;height: 100%;background-color: white;border-radius: 5px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);margin-top:60px">
+	<el-form ref="formo" :rules="rules" :model="formRGO" label-width="160px" class="login-form">
+						<h2 class="login-title">谷粒酬 受赠方注册</h2>
+			<div style="margin-left: -80px">
+						<el-form-item label="手机号" prop="username" style="width:260px; margin-left: 80px">
+						<el-input v-model="formRGO.username" style="width:160px"></el-input>
+						</el-form-item>
+
+						<el-row :gutter="10">
+                		<el-col :span="17">
+						<el-form-item label="获取验证码" prop="code" style="width:260px; margin-left: 80px">
+							<el-input v-model="formRGO.code" placeholder="请输入验证码" style="width:160px"></el-input>
+						</el-form-item>
+						</el-col>
+                		<el-col :span="7">
+							<el-button type="button" @click="sendcode" :disabled="disabled" v-if="disabled==false">发送验证码
+							</el-button>
+							<el-button type="button" @click="sendcode" :disabled="disabled" v-if="disabled==true">{{btntxt}}
+							</el-button>
+						</el-col>
+              			</el-row>
+
+						<el-form-item label="密码" prop="password" style="width:260px; margin-left: 80px">
+						<el-input v-model="formRGO.password" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="确认密码" prop="cpassword" style="width:260px; margin-left: 80px">
+						<el-input v-model="formRGO.cpassword" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="法定代表人" prop="name" style="width:260px; margin-left: 80px">
+						<el-input v-model="formRGO.name" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="法定代表人身份证号" prop="id" style="width:260px; margin-left: 80px">
+						<el-input v-model="formRGO.id" style="width:160px"></el-input>
+						</el-form-item>
+			</div>
+						<el-form-item>
+						<el-button type="primary" style="background-color: indianred; color: white; width: 120px; margin-left: -130px" @click="submitFormRG('formo')">下一步</el-button>
+						</el-form-item>
+	</el-form>
+	</div>
+	</el-col>
+	</div>
+
+	<div id="stage1" v-show="sec">
+	<el-steps :space="500"  :active="1" finish-status="success"  align-center>
+		<el-step title="已完成" description="实名制认证"></el-step>
+		<el-step title="进行中" description="信息填写"></el-step>
+		<el-step title="步骤 3" description="注册成功"></el-step>
+	</el-steps>
+	<el-col :span="8" :offset="8">
+	<div style="border: 1px solid pink;width: 100%;height: 100%;background-color: white;border-radius: 5px;box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);">
+	<el-form ref="formb" :rules="rulerg" :model="formrg" label-width="120px" class="login-form">
+						<h2 class="login-title">谷粒酬 受赠方注册</h2>
+						<el-form-item label="省份城市" prop="procity" style="width:200px; margin-left: 80px">
+							<el-cascader 
+							style="width:160px" 
+							:options="options"
+							v-model="formrg.selectedOptions"
+							@change="handleChange">
+							</el-cascader>
+						</el-form-item>
+						<el-form-item label="具体市内地址" prop="address" style="width:200px; margin-left: 80px">
+						<el-input v-model="formrg.address" style="width:160px" type="textarea"></el-input>
+						</el-form-item>
+						<el-form-item label="单位名称" prop="hname" style="width:200px; margin-left: 80px">
+						<el-input v-model="formrg.hname" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="单位类别" prop="utype" style="width:200px; margin-left: 80px">
+						<el-input v-model="formrg.utype" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="统一信用代码" prop="tycode" style="width:200px; margin-left: 80px">
+						<el-input v-model="formrg.tycode" style="width:160px"></el-input>
+						</el-form-item>
+						<el-form-item label="单位简介" prop="info" style="width:200px; margin-left: 80px">
+						<el-input v-model="formrg.info" style="width:160px" type="textarea"></el-input>
+						</el-form-item>
+						<el-form-item>
+						<el-button type="primary;" style="background-color: indianred; color: white; width: 120px" @click="submitFormrg('formb')">注册</el-button>
+						</el-form-item>
+	</el-form>
+	</div>
+	</el-col>
+	</div>
+
+	<div id="stage1" v-show="thir">
+		<el-steps :space="500"  :active="3" finish-status="success"  align-center>
+			<el-step title="已完成" description="实名制认证"></el-step>
+			<el-step title="已完成" description="信息填写"></el-step>
+			<el-step title="注册成功"></el-step>
+		</el-steps>
+		<h1 style="font-size:80px;margin-top: 200px">注册成功！</h1>
 	</div>
 	
-	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 50%;background-color: white;border: 2px solid pink;border-radius: 5px">
-	<table width="70%" align="center">
-	<tr>
-		<td colspan="2"><font size="6" style="margin-left: 100px">谷粒酬</font>受赠方注册</td>
-	</tr>
-	<tr>
-		<td>手机号:</td>
-		<td><input type="text" placeholder="11位手机号" class="in"/></td>
-	</tr>
-	<tr>
-		<td>验证码:</td>
-		<td><input type="text" placeholder="输入验证码" class="in"/></td> 
-		<td><input type="button" value="获取验证码" style="height: 30px;background-color: coral;color: white;border: none;border-radius: 3px"/></td>
-	</tr>
-	<tr>
-		<td>密码:</td>
-		<td><input type="password" placeholder="6-16位密码，区分大小写" class="in"/></td>
-	</tr>
-	<tr>
-		<td>确认密码:</td>
-		<td><input type="password" placeholder="确认密码" class="in"/></td>
-	</tr>
-	<tr>
-		<td>法定代表人:</td>
-		<td><input type="text" placeholder="法定代表人" class="in"/></td>
-	</tr>
-	<tr>
-		<td>法定代表人身份证号:</td>
-		<td><input type="text" placeholder="法定代表人身份证号" class="in"/></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><input type="button" value="下一步" style="background-color: indianred;color:white;height:30px;width: 306px;border: none;border-radius: 3px;" @click="jump()"/></td>
-	</tr>
-	</table>
-	</div>
 	</div>
 	
-	<div id="stage2" v-show="sec">
-	<div style="position: absolute">
-		<img src="../../assets/rg2.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
-	</div>
-	
-	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 70%;background-color: white;border: 2px solid pink;border-radius: 5px">
-	<table width="70%" align="center">
-	<tr>
-		<td colspan="2"><font size="6" style="margin-left: 100px">谷粒酬</font>捐赠方注册</td>
-	</tr>
-	<tr>
-		<td>省份:</td>
-		<td>
-			<select class="in">
-				<option value="-1">-----请选择-----</option>
-				<option value="1">广东省</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>城市:</td>
-		<td>
-			<select class="in">
-				<option value="-1">-----请选择-----</option>
-				<option value="1">广州市</option>
-				<option value="2">深圳市</option>
-			</select>
-		</td>
-	</tr>
-	<tr>
-		<td>具体市内地址:</td>
-		<td><input type="text" placeholder="地址" class="in" style="width: 300px; height: 100px"/></td>
-	</tr>
-	<tr>
-		<td>单位名称:</td>
-		<td><input type="text" placeholder="单位名称" class="in"/></td>
-	</tr>
-	<tr>
-		<td>单位类别:</td>
-		<td><input type="text" placeholder="单位类别" class="in"/></td>
-	</tr>
-	<tr>
-		<td>统一信用代码:</td>
-		<td><input type="text" placeholder="统一信用代码" class="in"/></td>
-	</tr>
-	<tr>
-		<td>单位简介:</td>
-		<td><input type="text" placeholder="单位简介" class="in" style="width: 300px; height: 100px"/></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><input type="button" value="下一步" style="background-color: indianred;color:white;height:30px;width: 306px;border: none;border-radius: 3px;" @click="jump2()"/></td>
-	</tr>
-	</table>
-	</div>
-	</div>
-	
-	<div id="stage3" v-show="thir">
-	<div style="position: absolute">
-		<img src="../../assets/rg3.png" style="width: 1000px;height: 45px;margin-left: 220px;margin-top:80px"/>
-	</div>
-	
-	<div style="position:absolute;top:200px;left:260px;width: 65%;height: 40%;">
-	<table width="60%" align="center">
-		<tr>
-			<td><span  style="margin-left: 150px;font-size: 50px">注册成功!</span></td>
-		</tr>
-	</table>
-	</div>
-	</div>
+
+	</el-main>
+
+    <el-footer>
+      <MainBottom></MainBottom>
+    </el-footer>
 	</div>
 </template>
 
 <script>
+import '../../assets/baseStyle.css';
+import MainTop from "../MainTop";
+import MainBottom from "../MainBottom";
+import { provinceAndCityData,CodeToText,TextToCode } from 'element-china-area-data';
+
 export default {
   name: 'Register_g',
+  components: {MainTop, MainBottom},
   data() {
 	return{
-	fir:true,
-  	sec:false,
-  	thir:false,
+	fir: true,
+	sec: false,
+	thir: false,
+	options: provinceAndCityData,
+	formrg: {
+		selectedOptions: [],
+		address: "",
+	   hname: "",
+	   utype: "",
+	   tycode: "",
+	   info: "",
+	},
+	rulerg: {
+		selectedOptions: [{  
+				type: 'Array',
+				required: true,
+				message: '请选择',
+				trigger: 'blur'
+			}],
+		   hname: [
+             {required: true, message: "真实姓名不能为空", trigger: 'blur'},
+           ],
+		   address: [
+             {required: true, message: "地址不能为空", trigger: 'blur'},
+           ],
+		   utype: [
+             {required: true, message: "单位类别不能为空", trigger: 'blur'},
+           ],
+		   info: [
+             {required: true, message: "单位简介不能为空", trigger: 'blur'},
+           ],
+		   tycode: [
+             {required: true, message: "统一信用代码不能为空", trigger: 'blur'},
+           ]
+	},    
+	formRGO: {
+           username: "",
+		   code: "",
+           password: "",
+		   cpassword: "",
+		   name: "",
+		   id: "",
+		   
+         },
+         rules: {
+           username: [
+             {required: true, message: "手机号不能为空", trigger: 'blur'},
+             {min: 11, max: 11, message: "手机号11位", trigger: 'blur'},
+           ],
+		   code: [
+			 {required: true, message: "验证码不能为空", trigger: 'blur'},
+		   ],
+           password: [
+             {required: true, message: "密码不能为空", trigger: 'blur'},
+             {min: 6, max: 10, message: "密码6-10位", trigger: 'blur'},
+           ],
+		   cpassword: [
+             {required: true, message: "密码不能为空", trigger: 'blur'},
+             {min: 6, max: 10, message: "密码6-10位", trigger: 'blur'},
+           ],
+		   name: [
+             {required: true, message: "法定代表人不能为空", trigger: 'blur'},
+           ],
+		   id: [
+			 {required: true, message: "法定代表人身份证号不能为空", trigger: 'blur'},
+			 {min: 18, max: 18, message: "身份证号18位", trigger: 'blur'},
+		   ],
+		   
+       },
+	   disabled: false,
+    	time: 0,
+    	btntxt: "重新发送",
 	}
   },
   methods: {
-	  jump(){
-		this.fir = false;
-		this.sec = true;
+	  //手机验证发送验证码
+            sendcode() {
+                const reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/
+                if (this.formRGO.username == '') {
+                    this.$message({
+                        message:'手机号不能为空',
+                        center: true
+                    })
+                    return
+                }
+                if (!reg.test(this.formRGO.username)) {
+                    this.$message({
+                        message:'请输入正确的手机号',
+                        center:true
+                    })
+                    return
+                } else {
+                    console.log(this.formRGO.username);
+                    this.$message({
+                        message: '发送成功',
+                        type: 'success',
+                        center:true
+                    });
+                    this.time = 60;
+                    this.disabled = true;
+                    this.timer();
+                }
+            },
+			//60S倒计时
+            timer() {
+                if (this.time > 0) {
+                    this.time--;
+                    this.btntxt = this.time + "s后重新获取";
+                    setTimeout(this.timer, 1000);
+                } else {
+                    this.time = 0;
+                    this.btntxt = "获取验证码";
+                    this.disabled = false;
+                }
+            },
+	  submitFormRG(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {//真正项目中登录成功之后，就可以用路由跳转页面
+               this.fir = false;
+			   this.sec = true;
+			   return true;
+		  }
+        });
+      },
+	  submitFormrg(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {//真正项目中登录成功之后，就可以用路由跳转页面
+               this.sec = false;
+			   this.thir = true;
+			   return true;
+		  }
+        });
+      },
+	  resetForm(formName) {
+		  this.$refs[formName].resetFields();
 	  },
-	  jump2(){
-		  this.sec = false;
-		  this.thir = true;
-
-	  }
+	  handleChange (value) {
+        console.log(value);
+      }
 
   }
 }
@@ -147,10 +282,5 @@ export default {
 				margin: 0;
 				border: 0px;
 				padding: 0;
-				background: url("../../assets/bg.png") no-repeat;
-				background-size: cover;
-				height: 100%;
-				width: 100%;
-				position: fixed;
 			  }
 </style>
