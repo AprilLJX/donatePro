@@ -17,35 +17,39 @@
             谷粒捐物资捐赠系统
         </span>
     </div>
-    <div style="margin-left: auto">
+    <div v-if="header_info.if_show_navi" style="margin-left: auto">
       <div data-type="top_title2">
-        <span data-type="top_note2" class="--mb--rich-text" data-boldtype="0" style="color:rgba(56, 148, 255, 1);">
+<!--        <p :class="coms===1?'hear1':'hear'"></p>-->
+<!--        判断coms是否等于1，如果等于就追加hear1类名否则追加hear类名-->
+        <span data-type="top_note2" :class="[header_info.height_line===0?'heightline':'','--mb--rich-text']" data-boldtype="0" @click="gotoHome()">
           首页
         </span>
       </div>
       <div data-type="top_title2">
-        <span data-type="top_note2" class="--mb--rich-text" data-boldtype="0">
+        <span data-type="top_note2" :class="header_info.height_line===1?'--mb--rich-text heightline':'--mb--rich-text'" data-boldtype="0">
           平台介绍
         </span>
       </div>
       <div data-type="top_title2">
-        <span v-if="user_type==='1'" data-type="top_note2" class="--mb--rich-text" data-boldtype="0">
+        <span v-if="header_info.user_type==='1'" data-type="top_note2" :class="header_info.height_line===2?'--mb--rich-text heightline':'--mb--rich-text'" data-boldtype="0">
           项目发布
         </span>
-        <span v-else="" data-type="top_note2" class="--mb--rich-text" data-boldtype="0" @click="gotoProjectList()">
+        <span v-else="" data-type="top_note2" :class="header_info.height_line===2?'--mb--rich-text heightline':'--mb--rich-text'" data-boldtype="0" @click="gotoProjectList()">
           捐赠项目
         </span>
       </div>
       <div data-type="top_title2">
-        <span data-type="top_note2" class="--mb--rich-text" data-boldtype="0">
+        <span data-type="top_note2" :class="header_info.height_line===3?'--mb--rich-text heightline':'--mb--rich-text'" data-boldtype="0">
           关于我们
         </span>
       </div>
+    </div>
+      <div :style="{'margin-left':header_info.if_show_navi ? '':'auto'}">
       <div data-type="top_title2" style="display: table">
         <div class="widget svg_icon_path clickable" style="display: table-cell">
           <span class="icon svg-icon-wrap svg-fa5 svg-fa5-sign-in-alt-fas-wrap"
                 style="width: 24px; height: 24px; min-width: 24px; min-height: 24px;" @click="gotoLogin()">
-            <svg v-if="if_logo" xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="64 64 896 896" width="27"
+            <svg v-if="header_info.if_login" xmlns="http://www.w3.org/2000/svg" class="svg-icon" viewBox="64 64 896 896" width="27"
                  height="27"
                  style="fill: rgb(16, 16, 16);">
               <path
@@ -71,19 +75,43 @@
 export default {
   name: "MainTop",
   props: {
-    user_type: {
-      type: String,
-      default: '0'
-    },
-    if_logo: {
-      type: Boolean,
-      default: false
-    }
+    header_info: {
+      type: Object,//type为Array,default为函数
+      default() {
+      }
+    },//用props属性进行传数据，此时子组件已经获取到list的数据了
+  },
+  created() {
+    console.log(this.header_info)
   },
   methods: {
     gotoProjectList() {
-      //直接跳转
-      this.$router.push('/projectList');
+      console.log(this.header_info.height_line)
+      if(this.header_info.height_line!==2){
+        //直接跳转
+        // 修改heightline下标，将信息传值给下一个页面
+        console.log(this.header_info)
+        // 跳转
+        this.$router.push({
+          name: '项目列表',
+          path: '/projectList',
+          params: this.header_info
+        });
+      }
+    },
+    gotoHome() {
+      // console.log(this.header_info.height_line)
+      if(this.header_info.height_line!==0){
+        //直接跳转
+        // 修改heightline下标，将信息传值给下一个页面
+        console.log(this.header_info)
+        // 跳转
+        this.$router.push({
+          name: 'index',
+          path: '/',
+          params: this.header_info
+        });
+      }
     },
     gotoLogin() {
       //直接跳转到个人中心
@@ -141,5 +169,8 @@ export default {
     letter-spacing: 0px;
     line-height: 27px;
     text-decoration: none;
+  }
+  .heightline{
+    color: crimson!important;
   }
 </style>

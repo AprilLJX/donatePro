@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-header>
-      <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <MainTop :header_info="header_info"></MainTop>
     </el-header>
     <SearchBar></SearchBar>
     <el-main style="width: 1440px">
@@ -49,15 +49,41 @@ export default {
   name: "ProjectList",
   data(){
     return{
-      value:true
+      value:true,
+      project_detail: {},
+      header_info:{
+        height_line:2,
+        if_logo: false,
+        user_type: '0', // 0 is donator, 1 is reciver
+        if_show_navi:true
+      },
     };
-
+  },
+  created(){
+    this.getParams()
+    console.log(this.header_info)
   },
   methods: {
+    getParams(){
+      // 取到路由带过来的参数
+      console.log('准备数据中。。。。。')
+      // 将数据放在当前组件的数据内
+      this.header_info  = this.$route.params
+      this.header_info.height_line = 2
+      console.log('数据已准备好！')
+    },
     gotoProjectDetail(i) {
       //直接跳转
       window.console.log("查询成功", i);
-      this.$router.push('/projectList/projectDetail');
+      console.log(this.header_info)
+      var request_data={}
+      this.$set(request_data,'header_info',this.header_info)
+      this.$set(request_data,'project_detail',this.project_detail)
+      this.$router.push({
+        name: '项目详情',
+        path: '/projectList/projectDetail',
+        params: {jum:request_data}
+      });
     }
   }
 };

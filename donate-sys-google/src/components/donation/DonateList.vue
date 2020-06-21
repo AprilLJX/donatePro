@@ -1,55 +1,55 @@
 <template>
   <div>
     <el-header>
-      <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <MainTop :header_info="header_info"></MainTop>
     </el-header>
     <SearchBar></SearchBar>
     <el-main style="width:1440px;background:#F1F1F1">
-      <el-row>
-        <el-col :span="12" :offset="3">
-          <div style="background: white;height: 270px">
-            <el-row>
-              <el-col :span="12">
-                <div style="width: 90%;margin: 5%;text-align:center;vertical-align:middle;">
-                  <img src='https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' class="image" style="width: 100%;height:60%">
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div style="margin: 5%;">
-                  <div class="need_staff" style="text-align: left">
-                    <p class="project_name">{{project_detail.name}}</p>
-                    <p class="project_info">
-                      <span>
-                        <i class="el-icon-location" style="color: red"></i>
-                        {{project_detail.place}}
-                      </span>
-                    </p>
-                    <p class="project_info">
-                      <span>{{'发起方： '+project_detail.demander.name}}</span>
-                    </p>
-                    <p class="project_info">
-                      <span>
-                        紧急度：
-                        <i v-for="i in project_detail.emergency" :key="i" class="el-icon-star-on" style="color: red"></i>
-                      </span>
-                    </p>
-                    <p class="project_info">
-                      <span>{{"参与度： "+project_detail.receive_times +" 人次"}}</span>
-                    </p>
-                    <li v-for="(item,idx) in needy_list" style="color: crimson;line-height: 20px">
-                      <span>{{item[0]+': '+ item[1]+' '+ item[2]}}</span>
-                    </li>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div style="background: white;height: 270px"></div>
-        </el-col>
-      </el-row>
-<!--      <ProjectCard :v-bind="project_detail"></ProjectCard>-->
+<!--      <el-row>-->
+<!--        <el-col :span="12" :offset="3">-->
+<!--          <div style="background: white;height: 270px">-->
+<!--            <el-row>-->
+<!--              <el-col :span="12">-->
+<!--                <div style="width: 90%;margin: 5%;text-align:center;vertical-align:middle;">-->
+<!--                  <img src='https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' class="image" style="width: 100%;height:60%">-->
+<!--                </div>-->
+<!--              </el-col>-->
+<!--              <el-col :span="12">-->
+<!--                <div style="margin: 5%;">-->
+<!--                  <div class="need_staff" style="text-align: left">-->
+<!--                    <p class="project_name">{{project_detail.name}}</p>-->
+<!--                    <p class="project_info">-->
+<!--                      <span>-->
+<!--                        <i class="el-icon-location" style="color: red"></i>-->
+<!--                        {{project_detail.place}}-->
+<!--                      </span>-->
+<!--                    </p>-->
+<!--                    <p class="project_info">-->
+<!--                      <span>{{'发起方： '+project_detail.demander.name}}</span>-->
+<!--                    </p>-->
+<!--                    <p class="project_info">-->
+<!--                      <span>-->
+<!--                        紧急度：-->
+<!--                        <i v-for="i in project_detail.emergency" :key="i" class="el-icon-star-on" style="color: red"></i>-->
+<!--                      </span>-->
+<!--                    </p>-->
+<!--                    <p class="project_info">-->
+<!--                      <span>{{"参与度： "+project_detail.receive_times +" 人次"}}</span>-->
+<!--                    </p>-->
+<!--                    <li v-for="(item,idx) in needy_list" style="color: crimson;line-height: 20px">-->
+<!--                      <span>{{item[0]+': '+ item[1]+' '+ item[2]}}</span>-->
+<!--                    </li>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </el-col>-->
+<!--            </el-row>-->
+<!--          </div>-->
+<!--        </el-col>-->
+<!--        <el-col :span="6">-->
+<!--          <div style="background: white;height: 270px"></div>-->
+<!--        </el-col>-->
+<!--      </el-row>-->
+      <ProjectCard :project_detail="project_detail"></ProjectCard>
       <el-row  style="margin-top: 5%">
         <el-col :span="18" :offset="3">
           <div style="background: white;text-align: left">
@@ -109,7 +109,6 @@
                 <!--                弹窗-->
                 <el-dialog title="添加捐赠物资" :visible.sync="donateSuppliesFormVisible">
                   <el-form :model="form">
-
                     <el-form-item label="物资名称" :label-width="formLabelWidth">
                       <el-select v-model="form.supply_id" placeholder="请选择" @change="selectSupply">
                         <el-option v-for="i in project_detail.demande_list.medical" :key="i.id" :label="i.name" :value="i.id"></el-option>
@@ -183,6 +182,12 @@ export default {
   name: "DonateList",
   data () {
     return {
+      header_info:{
+        height_line:-1,
+        if_logo: false,
+        user_type: '0', // 0 is donator, 1 is reciver
+        if_show_navi:false
+      },
       project_detail: {
         id: '0100001',
         name: '武汉体育中心',
@@ -289,7 +294,22 @@ export default {
       formLabelWidth: '120px',
     }
   },
+  created(){
+    this.getParams()
+    console.log(this.header_info)
+  },
   methods: {
+    getParams(){
+      // 取到路由带过来的参数
+      console.log('准备数据中。。。。。')
+      // 将数据放在当前组件的数据内
+      const routerParams = this.$route.params.jum
+      this.header_info = routerParams.header_info
+      this.project_detail = routerParams.project_detail
+      this.header_info.height_line = -1//哪一个link 块被选中，即表示当前页
+      this.header_info.if_show_navi = false
+      console.log('数据已准备好！')
+    },
     handleChange(value) {
       console.log(value);
       console.log(this._data)
@@ -391,12 +411,13 @@ export default {
         this.$set(request_data,'project_info',this.project_detail)
         this.$set(request_data,'supplies_info',this.supplies_list)
         this.$set(request_data,'donate_msg',this.donate_msg)
+        this.$set(request_data,'header_info',this.header_info)
         console.log(request_data)
         // 跳转
         this.$router.push({
-          name: '谷粒捐物资捐赠系统-定向捐赠单填写完成',
+          name: '定向捐赠单填写完成',
           // name: 'mallList',
-          params: request_data
+          params: {jum:request_data}
         });
       }
 
@@ -406,16 +427,6 @@ export default {
 </script>
 
 <style scoped>
-  .project_name{
-    font-size: 20px;
-    line-height: 26px;
-    color: crimson;
-  }
-  .project_info{
-    font-size: 12px;
-    line-height: 12px;
-    color: gray;
-  }
   .project_info > span{
     margin-right: 10px;
   }

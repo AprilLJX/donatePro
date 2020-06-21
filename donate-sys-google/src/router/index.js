@@ -35,33 +35,33 @@ export default new Router({
     },
     {
       path: '/home',
-      name: '谷粒捐物资捐赠系统-首页',
+      name: '首页',
       component: Home
     },
     {
       path: '/projectList',
-      name: '谷粒捐物资捐赠系统-项目列表',
+      name: '项目列表',
       component: ProjectList
     },
     {
-      path: '/projectList/projectDetail',
-      name: '谷粒捐物资捐赠系统-项目详情',
+      path: '/projectList/projectDetail/:jum',
+      name: '项目详情',
       component: ProjectDetail,
       children: []
     },
     {
-      path: '/donateList',
-      name: '谷粒捐物资捐赠系统-定向捐赠单填写',
+      path: '/donateList/:jum',
+      name: '定向捐赠单填写',
       component: DonateList
     },
     {
-      path: '/donateList/finished',
-      name: '谷粒捐物资捐赠系统-定向捐赠单填写完成',
+      path: '/donateList/finished/:jum',
+      name: '定向捐赠单填写完成',
       component: DonateListFinished
     },
     {
-      path: '/Logistics',
-      name: '谷粒捐物资捐赠系统-物流信息填写',
+      path: '/logistics/:jum',
+      name: '物流信息',
       component: DonateLogistics
     },
     {
