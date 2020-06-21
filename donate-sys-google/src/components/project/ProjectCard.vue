@@ -30,8 +30,11 @@
                 <p class="project_info">
                   <span>{{"参与度： "+project_detail.receive_times +" 人次"}}</span>
                 </p>
-                <li v-for="(item,idx) in needy_list" style="color: crimson;line-height: 20px">
-                  <span>{{item[0]+': '+ item[1]+' '+ item[2]}}</span>
+                <li v-for="item in project_detail.demande_list.medical" style="color: crimson;line-height: 20px">
+                  <span>{{item.name+': '+ item.needy_amount+' '+ item.scal}}</span>
+                </li>
+                <li v-for="item in project_detail.demande_list.daliy" style="color: crimson;line-height: 20px">
+                  <span>{{item.name+': '+ item.needy_amount+' '+ item.scal}}</span>
                 </li>
               </div>
             </div>
@@ -60,5 +63,17 @@ export default {
 </script>
 
 <style scoped>
-
+  .project_name{
+    font-size: 20px;
+    line-height: 26px;
+    color: crimson;
+  }
+  .project_info{
+    font-size: 12px;
+    line-height: 12px;
+    color: gray;
+  }
+  .project_info > span{
+    margin-right: 10px;
+  }
 </style>

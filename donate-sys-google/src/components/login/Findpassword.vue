@@ -2,8 +2,8 @@
 
 	<div>
 	<el-header>
-      <div id="top">
-        <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <div>
+        <MainTop :header_info="header_info"></MainTop>
       </div>
     </el-header>
 	<div id="top" style="margin-top:-50px">
@@ -53,9 +53,9 @@
 	<div id="stage2" v-show="sec">
 		<h1 style="font-size:80px;padding-top: 150px">重置成功！</h1>
 	</div>
-	
+
 	</div>
-	
+
 
 	</el-main>
 
@@ -76,13 +76,19 @@ export default {
   components: {MainTop, MainBottom},
   data() {
 	return{
+    header_info:{
+      height_line:-1,
+      if_logo: false,
+      user_type: '0', // 0 is donator, 1 is reciver
+      if_show_navi:false
+    },
 	fir: true,
 	sec: false,
 	formp: {
            username: "",
 		   code: "",
            password: "",
-		   cpassword: "",	   
+		   cpassword: "",
          },
          rules: {
            username: [

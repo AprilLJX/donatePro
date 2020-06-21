@@ -2,7 +2,7 @@
   <div>
     <el-header>
       <div id="top">
-        <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+        <MainTop :header_info="header_info"></MainTop>
       </div>
     </el-header>
     <el-main>
@@ -174,9 +174,12 @@ export default {
   components: {MainTop, MainBottom},
   data() {
     return {
-      if_logo: false,
-      // 0 is donator, 1 is reciver
-      user_type: '1'
+      header_info:{
+        height_line:0,
+        if_login: true,
+        user_type: '0', // 0 is donator, 1 is reciver,
+        if_show_navi:true
+      },
     }
   }
 }

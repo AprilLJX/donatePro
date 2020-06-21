@@ -1,8 +1,8 @@
 <template>
   <div>
 	<el-header>
-      <div id="top">
-        <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <div>
+        <MainTop :header_info="header_info"></MainTop>
       </div>
     </el-header>
 	<div id="top" style="margin-top:-50px">
@@ -47,8 +47,8 @@
 						<el-input v-model="formRD.id" style="width:160px"></el-input>
 						</el-form-item>
 						<el-form-item label="省份城市" prop="procity" style="width:200px; margin-left:80px">
-							<el-cascader 
-							style="width:160px" 
+							<el-cascader
+							style="width:160px"
 							:options="options"
 							v-model="formRD.selectedOptions"
 							@change="handleChange">
@@ -66,9 +66,9 @@
 	<div id="stage1" v-show="sec">
 		<h1 style="font-size:80px;margin-top: 200px">注册成功！</h1>
 	</div>
-	
+
 	</div>
-	
+
 
 	</el-main>
 
@@ -90,9 +90,15 @@ export default {
   components: {MainTop, MainBottom},
   data() {
 	return{
+    header_info:{
+      height_line:-1,
+      if_logo: false,
+      user_type: '0', // 0 is donator, 1 is reciver
+      if_show_navi:false
+    },
 	fir: true,
 	sec: false,
-	options: provinceAndCityData,    
+	options: provinceAndCityData,
 	formRD: {
            username: "",
 		   code: "",

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-header>
-      <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <MainTop :header_info="header_info"></MainTop>
     </el-header>
     <SearchBar></SearchBar>
 
@@ -250,18 +250,56 @@ export default {
         ['帐篷','200','顶'],
         ['被子','200','床']
       ],
-      activeNames: ['0']
+      activeNames: ['0'],
+      header_info:{
+        height_line:-1,
+        if_logo: false,
+        user_type: '0', // 0 is donator, 1 is reciver
+        if_show_navi:false
+      },
 
     }
   },
+  created(){
+    this.getParams()
+    console.log(this.header_info)
+
+// //在页面刷新时将vuex里的信息保存到localStorage里
+//     window.addEventListener("beforeunload",()=>{
+//       localStorage.setItem("messageStore",JSON.stringify(this.$store.state))
+//     })
+//
+// //在页面加载时读取localStorage里的状态信息
+//     localStorage.getItem("messageStore") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("messageStore"))));
+//
+    },
   methods:{
+    getParams(){
+      // 取到路由带过来的参数
+      console.log('准备数据中。。。。。')
+      // 将数据放在当前组件的数据内
+      // console.log(this.$route.params)
+      const routerParams = this.$route.params.jum
+      this.header_info = routerParams.header_info
+      this.header_info.height_line = -1//哪一个link 块被选中，即表示当前页
+      this.header_info.if_show_navi = false
+      console.log('数据已准备好！')
+    },
       handleChange(val) {
         console.log(val);
       },
       gotoDonate() {
         //直接跳转
         window.console.log("跳转填写页");
-        this.$router.push('/donateList');
+        // this.$router.push('/donateList');
+        var request_data={}
+        this.$set(request_data,'header_info',this.header_info)
+        this.$set(request_data,'project_detail',this.project_detail)
+        this.$router.push({
+          name: '定向捐赠单填写',
+          path: '/donateList',
+          params: {jum:request_data}
+        });
       }
   }
 }

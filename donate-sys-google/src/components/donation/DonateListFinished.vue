@@ -1,54 +1,11 @@
 <template>
   <div>
     <el-header>
-      <MainTop v-bind:if_logo="true" v-bind:user_type="'0'"></MainTop>
+      <MainTop :header_info="header_info"></MainTop>
     </el-header>
     <SearchBar></SearchBar>
     <el-main style="width:1440px;background:#F1F1F1">
-      <el-row>
-        <el-col :span="12" :offset="3">
-          <div style="background: white;height: 270px">
-            <el-row>
-              <el-col :span="12">
-                <div style="width: 90%;margin: 5%;text-align:center;vertical-align:middle;">
-                  <img src='https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg' class="image" style="width: 100%;height:60%">
-                </div>
-              </el-col>
-              <el-col :span="12">
-                <div style="margin: 5%;">
-                  <div class="need_staff" style="text-align: left">
-                    <p class="project_name">{{project_info.name}}</p>
-                    <p class="project_info">
-                      <span>
-                        <i class="el-icon-location" style="color: red"></i>
-                        {{project_info.place}}
-                      </span>
-                    </p>
-                    <p class="project_info">
-                      <span>{{'发起方： '+project_info.demander.name}}</span>
-                    </p>
-                    <p class="project_info">
-                      <span>
-                        紧急度：
-                        <i v-for="i in project_info.emergency" :key="i" class="el-icon-star-on" style="color: red"></i>
-                      </span>
-                    </p>
-                    <p class="project_info">
-                      <span>{{"参与度： "+project_info.receive_times +" 人次"}}</span>
-                    </p>
-                    <li v-for="(item,idx) in needy_list" style="color: crimson;line-height: 20px">
-                      <span>{{item[0]+': '+ item[1]+' '+ item[2]}}</span>
-                    </li>
-                  </div>
-                </div>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div style="background: white;height: 270px"></div>
-        </el-col>
-      </el-row>
+      <ProjectCard :project_detail="project_info"></ProjectCard>
       <el-row  style="margin-top: 5%">
         <el-col :span="18" :offset="3">
           <div style="background: white;text-align: left">
@@ -120,12 +77,20 @@
 import MainTop from "../MainTop";
 import MainBottom from "../MainBottom";
 import SearchBar from "../SearchBar";
+import ProjectCard from "../project/ProjectCard"
 
 export default {
-  components: {MainTop, MainBottom,SearchBar},
+  components: {MainTop, MainBottom,SearchBar, ProjectCard},
   name: "DonateListFinished",
   data() {
-    return {}
+    return {
+      header_info:{
+        height_line:-1,
+        if_logo: false,
+        user_type: '0', // 0 is donator, 1 is reciver
+        if_show_navi:false
+      },
+    }
   },
   created(){
     this.getParams()
@@ -135,25 +100,47 @@ export default {
     getParams(){
       // 取到路由带过来的参数
       console.log(this.$route.params)
-      const routerParams = this.$route.params
+      const routerParams = this.$route.params.jum
       console.log('准备数据中。。。。。')
       // 将数据放在当前组件的数据内
       this.donater_info = routerParams.donater_info;
       this.demander_info = routerParams.demander_info;
-      this.project_info = routerParams.project_info;
+      // this.project_info = routerParams.project_info;
       this.supplies_info = routerParams.supplies_info;
       this.donate_msg = routerParams.donate_msg
+      this.header_info = routerParams.header_info
       console.log('数据已准备好！')
     },
     gotoProjectList(){
-      this.$router.push('/projectList');
+      console.log(this.header_info)
+      // 跳转
+      this.$router.push({
+        name: '项目列表',
+        path: '/projectList',
+        params: {jum:this.header_info}
+      });
     },
     gotoPresonalCenter(){
-      this.$router.push('/Maincontrol');
+      this.$router.push({
+        name: '个人中心',
+        path:'/Maincontrol',
+        params: this.header_info
+      });
+      // this.$router.push('/Maincontrol');
     },
     gotoLogistics(){
-      this.$router.push('/Logistics')
-
+      // 合并数据
+      var request_data={}
+      this.$set(request_data,'donater_info',this.donater_info)
+      this.$set(request_data,'project_info',this.project_info)
+      this.$set(request_data,'donate_msg',this.header_info)
+      console.log(request_data)
+      // 跳转
+      this.$router.push({
+        name: '物流信息',
+        path:'/logistics',
+        params: {jum:request_data}
+      });
     }
   },
   watch: {
@@ -165,16 +152,6 @@ export default {
 </script>
 
 <style scoped>
-  .project_name{
-    font-size: 20px;
-    line-height: 26px;
-    color: crimson;
-  }
-  .project_info{
-    font-size: 12px;
-    line-height: 12px;
-    color: gray;
-  }
   .project_info > span{
     margin-right: 10px;
   }
