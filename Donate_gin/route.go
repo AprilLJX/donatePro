@@ -16,14 +16,13 @@ func initRouter() *gin.Engine {
 
 	admin := router.Group("/admin")
 	{
-		admin.POST("/login",AdLogin)
+		admin.POST("/login",AdLogin)//http://localhost:9090/admin/login
 	}
 
-	//路由群组
-	users := router.Group("/users")
-	{
-		users.POST("/login", Login) //http://localhost:9090/users/login
 
+	projects := router.Group("/projects")
+	{
+		projects.GET("/prolist",ProList)
 	}
 
 	return router

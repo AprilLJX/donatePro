@@ -1,6 +1,7 @@
 package entity
 
-type logistics struct{
+//物流单号
+type Logistics struct{
 	LogisticsId int
 	LogiCom string
 	LogiNum string
