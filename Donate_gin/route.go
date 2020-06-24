@@ -19,9 +19,9 @@ func initRouter() *gin.Engine {
 		admin.POST("/login",AdLogin)//http://localhost:9090/admin/login
 	}
 
-	user := router.Group("/user")
+	user := router.Group("/donor")
 	{
-		user.POST("/login",UserLogin)
+		user.POST("/login",DonorLogin)
 	}
 	projects := router.Group("/projects")
 	{
