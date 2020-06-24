@@ -5,6 +5,7 @@ import (
 	"Donate_gin/entity"
 )
 
+//获取接收方用户信息
 func GetRecipientDao(recipientID int) (recipient entity.Recipient,err error) {
 	recipient.RecipientId = recipientID
 

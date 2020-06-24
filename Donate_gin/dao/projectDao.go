@@ -7,6 +7,7 @@ import (
 	"log"
 )
 
+//获取项目列表
 func GetProListDao()  (projectList []entity.DonaProject,err error){
 
 	projects := entity.DonaProject{
@@ -31,6 +32,7 @@ func GetProListDao()  (projectList []entity.DonaProject,err error){
 		return
 }
 
+//获取一个项目信息
 func GetOneProDao(demandId int)(onePro entity.RePro,err error)  {
 	err = db.DB.QueryRow("SELECT pro_name,introduction FROM demand_list WHERE demand_id=?",demandId).Scan(&onePro.ProName,&onePro.Introduction)
 	return

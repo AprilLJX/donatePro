@@ -5,6 +5,8 @@ import (
 	"Donate_gin/entity"
 )
 
+//获取项目列表
+
 func GetProList() (prolist []map[string]string,proNum int,err error){
 
 	onePro := entity.RePro{}

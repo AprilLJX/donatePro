@@ -5,6 +5,7 @@ import (
 	"errors"
 )
 
+//捐赠方登录
 func DonorLoginModel(account string,password string)(donormap map[string]string,err error)  {
 	donorID ,password_, err := dao.GetDonorPswDao(account)
 	//todo 加密模块
