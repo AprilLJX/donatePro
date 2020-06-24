@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
-//路由函数，实现与前端交互
-func AdLogin(c *gin.Context)  {
+
+func UserLogin(c *gin.Context)  {
 	account := c.PostForm("account")
 	password := c.PostForm("password")
 

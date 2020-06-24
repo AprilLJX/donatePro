@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func GetProList()  (projectList []entity.DonaProject,err error){
+func GetProListDao()  (projectList []entity.DonaProject,err error){
 
 	projects := entity.DonaProject{
 
@@ -31,7 +31,7 @@ func GetProList()  (projectList []entity.DonaProject,err error){
 		return
 }
 
-func GetOnePro(demandId int)(onePro entity.RePro,err error)  {
+func GetOneProDao(demandId int)(onePro entity.RePro,err error)  {
 	err = db.DB.QueryRow("SELECT pro_name,introduction FROM demand_list WHERE demand_id=?",demandId).Scan(&onePro.ProName,&onePro.Introduction)
 	return
 }

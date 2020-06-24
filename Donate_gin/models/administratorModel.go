@@ -6,13 +6,13 @@ import (
 )
 
 //接收api传来的数据，进行一些逻辑处理
-func AdLogin(account string,password string)(id int,err error)  {
+func AdLoginModelModel(account string,password string)(id int,err error)  {
 	admin := entity.Administrator{
 		Account:  account,
 		Password: password,
 	}
 
-	admin, err = dao.AdLogin(admin)
+	admin, err = dao.AdLoginDao(admin)
 	id = admin.Id
 	return
 }
