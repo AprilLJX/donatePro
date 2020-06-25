@@ -1,6 +1,9 @@
 package models
 
-import "Donate_gin/dao"
+import (
+	"Donate_gin/dao"
+	"strconv"
+)
 
 func DonateListModel(donorID int,recipientID int)(donorMap map[string]string, recipientMap map[string]string) {
 	donorMap = make(map[string]string)
@@ -19,4 +22,28 @@ func DonateListModel(donorID int,recipientID int)(donorMap map[string]string, re
 	donorMap["id_number"] = donor.IdNumber
 
 	return
+}
+
+func AddTargetDonaModel(projectId string,donorId string,materials string,message string,cate string,ifAnony string)(donationID int64,err error)  {
+	//todo 随机生成捐赠单号？
+	//materialsList []map[string]string
+	//materials := ""
+	//for _, materialsMap := range materialsList {
+	//	for matiral := range materialsMap {
+	//		//matiral：类别    materialsMap [matirals]：数量
+	//		materials = materials + matiral + ":" +materialsMap[matiral] + ";"
+	//	}
+	//}
+	//fmt.Printf("物资为%v:",materials)
+
+	//将id都转为int型
+	projectID, _ := strconv.Atoi(projectId)
+	donorID,_ := strconv.Atoi(donorId)
+	category,_ := strconv.Atoi(cate)
+	ifAnonymous,_ := strconv.Atoi(ifAnony)
+
+	donationID ,err = dao.AddTargetDonaDao(projectID,donorID,materials,message,category,ifAnonymous)
+
+	return
+
 }

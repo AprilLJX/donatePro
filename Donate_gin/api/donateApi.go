@@ -29,9 +29,32 @@ func DonateList(c *gin.Context)  {
 		})
 	}
 
-
-
-
-
-
 }
+
+//@materials 捐赠单填写的物资信息，前端以一个字典列表的形式返回
+func AddTargetDona(c *gin.Context){
+	projectID := c.PostForm("pro_id")
+	donorID := c.PostForm("donor_id")
+	materials := c.PostForm("materials")
+	message := c.PostForm("message")
+	ifAnonymous := c.PostForm("if_nonymous")
+	category := c.PostForm("category") //物资类别
+
+	donationID, err:=models.AddTargetDonaModel(projectID ,donorID,materials,message ,category ,ifAnonymous )
+
+	if err != nil{
+		c.JSON(http.StatusInternalServerError,gin.H{
+			"msg":err.Error(),
+			"status":http.StatusInternalServerError,
+		})
+	}else {
+		c.JSON(http.StatusOK,gin.H{
+			"msg":"新建捐赠单成功",
+			"status":http.StatusOK,
+			"donotionId":donationID,
+		})
+	}
+
+
+
+	}
