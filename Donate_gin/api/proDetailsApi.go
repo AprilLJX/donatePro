@@ -7,8 +7,8 @@ import (
 	"net/http"
 )
 
-func ProDetails(c *gin.Context)  {
-	prolist,prolistPlus,err := models.GetProDetails()
+func ProDetails(c *gin.Context, proId int)  {
+	prolist,prolistPlus,err := models.GetProDetails(proId)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"status" :http.StatusInternalServerError,

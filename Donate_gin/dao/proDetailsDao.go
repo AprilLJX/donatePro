@@ -4,7 +4,7 @@ import (
 	"Donate_gin/db"
 	"Donate_gin/entity"
 	"fmt"
-	"log"
+	//"log"
 )
 
 
@@ -16,31 +16,31 @@ import (
 //
 //}
 
-func GetProDetailsDao()  (projectList []entity.DonaProject,err error){
+func GetProDetailsDao(proId int)  (onePro []entity.DonaProject, err error){
 
-	projects := entity.DonaProject{
+	//projects := entity.DonaProject{
+	//
+	//}
 
-	}
-
-	rows, err := db.DB.Query("SELECT * FROM dona_project")
+	rows, err := db.DB.Query("SELECT demand_id FROM dona_project WHERE pro_id=?",proId)
 	defer rows.Close()
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for rows.Next() {
-		if err1 := rows.Scan(&projects.ProId, &projects.DemandId, &projects.IfEnd); err1 != nil {
-			log.Fatal(err1)
-		}
-
-		projectList = append(projectList,projects)
-
-	}
+	//for rows.Next() {
+	//	if err1 := rows.Scan(&projects.ProId, &projects.DemandId); err1 != nil {
+	//		log.Fatal(err1)
+	//	}
+	//
+	//	projectList = append(projectList,projects)
+	//
+	//}
 	return
 }
 
-func GetOneProDetailsDao(demandId int)(onePro entity.DonaProject,err error)  {
-	err = db.DB.QueryRow("SELECT proId FROM demand_list WHERE demand_id=?",demandId).Scan(&onePro.ProId)
+func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
+	err = db.DB.QueryRow("SELECT materials, recAddress, introduction FROM demand_list WHERE demand_id=?",demandId).Scan(&oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction)
 	return
 }

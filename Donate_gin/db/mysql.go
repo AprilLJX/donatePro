@@ -9,7 +9,7 @@ _ "github.com/go-sql-driver/mysql"
 var DB *sql.DB
 func init() {
 	var err error
-	DB,err = sql.Open("mysql","root:root@tcp(localhost:3306)/donate_google?charset=utf8&parseTime=True&loc=Local")
+	DB,err = sql.Open("mysql","root:wkx2000shxf(localhost:3306)/donate_google?charset=utf8&parseTime=True&loc=Local")
 	if err != nil{
 		log.Panic(err)
 	}
