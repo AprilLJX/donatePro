@@ -1,6 +1,7 @@
 package api
 
 import (
+	"Donate_gin/dao"
 	"Donate_gin/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -21,6 +22,7 @@ func ProList(c *gin.Context)  {
 			"proNum" : proNum,
 			"proList" :prolist,
 		})
+		dao.GetOneProDetailsDao(3)
 	}
 
 

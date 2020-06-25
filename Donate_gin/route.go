@@ -27,6 +27,7 @@ func initRouter() *gin.Engine {
 	projects := router.Group("/projects")
 	{
 		projects.GET("/prolist",ProList)
+		projects.GET("/prodetails",ProDetails)//http://localhost:9090/projects/prodetails
 	}
 
 	return router

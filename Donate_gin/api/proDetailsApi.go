@@ -1,14 +1,20 @@
 package api
 
 import (
+	"Donate_gin/dao"
 	"Donate_gin/models"
+	"strconv"
+
 	//"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func ProDetails(c *gin.Context)  {
-	prolist,prolistPlus,err := models.GetProDetails()
+	proId := c.PostForm("pro_id")//proId是string
+	proID, _ := strconv.Atoi(proId)//proID是int
+	prolistPlus,err := models.GetProDetailsModel(proID)
+	prolist,err := dao.GetProDetailsDao(proID)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"status" :http.StatusInternalServerError,

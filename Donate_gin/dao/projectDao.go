@@ -28,6 +28,7 @@ func GetProListDao()  (projectList []entity.DonaProject,err error){
 		projectList = append(projectList,projects)
 
 	}
+		fmt.Println(projectList)
 		return
 }
 
