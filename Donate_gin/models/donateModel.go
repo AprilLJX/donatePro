@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func DonateListModel(donorID int,recipientID int)(donorMap map[string]string, recipientMap map[string]string) {
+func DonateItemModel(donorID int,recipientID int)(donorMap map[string]string, recipientMap map[string]string) {
 	donorMap = make(map[string]string)
 	recipientMap = make(map[string]string)
 

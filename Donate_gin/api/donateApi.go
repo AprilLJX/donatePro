@@ -7,7 +7,8 @@ import (
 	"strconv"
 )
 
-func DonateList(c *gin.Context)  {
+//捐赠单填写
+func DonateItem(c *gin.Context)  {
 	recipientID, err1:= strconv.Atoi(c.PostForm("recipient_id"))
 	donorID, err2 := strconv.Atoi(c.PostForm("donor_id"))
 
@@ -20,7 +21,7 @@ func DonateList(c *gin.Context)  {
 			"status":http.StatusBadRequest,
 		})
 	}else {
-		donor,recipient := models.DonateListModel(donorID,recipientID)
+		donor,recipient := models.DonateItemModel(donorID,recipientID)
 		c.JSON(http.StatusOK,gin.H{
 			"msg":"返回成功",
 			"status":http.StatusOK,
