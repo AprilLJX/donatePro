@@ -10,7 +10,7 @@ func AdLogin(c *gin.Context)  {
 	account := c.PostForm("account")
 	password := c.PostForm("password")
 
-	adminId,err := models.AdLogin(account,password)
+	adminId,err := models.AdLoginModel(account,password)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"msg":err.Error(),

@@ -12,5 +12,5 @@ type Donor struct{
 	City string
 	Avatar string //头像，之后再改格式
 	LoveValue string //爱心值 or信用分
-	profile string //个人简介
+	Profile string //个人简介
 }
