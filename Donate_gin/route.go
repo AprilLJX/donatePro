@@ -21,10 +21,18 @@ func initRouter() *gin.Engine {
 
 	donor := router.Group("/donor")
 	{
+		donor.POST("/register",DonorRegister)
+		donor.POST("/sendSMS",SendSMS)
 		donor.POST("/login",DonorLogin)
 		donor.POST("/donateList",DonateItem)
 		donor.POST("/addTargerDona",AddTargetDona)
 	}
+
+	recipient := router.Group("/recipient")
+	{
+		recipient.POST("/login",RecipientLogin)
+	}
+
 	projects := router.Group("/projects")
 	{
 		projects.GET("/prolist",ProList)
