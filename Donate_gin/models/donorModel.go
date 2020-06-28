@@ -8,17 +8,17 @@ import (
 )
 
 //捐赠方登录
-func DonorLoginModel(account string,password string)(donormap map[string]string,err error)  {
+func DonorLoginModel(account string,password string)(donormap map[string]interface{},err error)  {
 	donorID ,password_, err := dao.GetDonorPswDao(account)
 	//todo 加密模块
 	if err != nil{
 		return
 	}
 
-	donormap = make(map[string]string)
+	donormap = make(map[string]interface{})
 	if password == password_{
 		donor,_ := dao.GetDonorDao(donorID)
-		donormap["donor_id"] = string(donorID)
+		donormap["donor_id"] = donorID
 		donormap["account"] = donor.Account
 		donormap["nickname"] = donor.Nickname
 		donormap["id_number"] = donor.IdNumber
