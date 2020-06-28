@@ -32,3 +32,25 @@ func RecipientLoginModel(account string,password string)(donormap map[string]str
 	}
 
 }
+
+func RecipientRegisterModel(account string,password string,name string,idNumber string,company string,categpry string,creditCode string,address string,profile string) (recipientId int64,err error) {
+
+	//todo 判断公司
+
+
+	recipientId,err = dao.RecipientRegisterDao(account,password,name,idNumber,company,categpry,creditCode,address,profile)
+	return
+
+}
+
+func RecipientVerify(account string,code string) (err error) {
+	gencode := Code[account]
+
+	if code == gencode{
+
+		return nil
+	}else {
+		return errors.New("验证码错误")
+	}
+
+}

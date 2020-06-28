@@ -2,9 +2,7 @@ package models
 
 import (
 	"Donate_gin/dao"
-	"Donate_gin/util"
 	"errors"
-	"fmt"
 )
 
 //捐赠方登录
@@ -35,19 +33,6 @@ func DonorLoginModel(account string,password string)(donormap map[string]interfa
 
 }
 
-var Code map[string]string
-
-func SendSMSModel(account string) (err error)  {
-	donorID,_ := dao.GetDonorAccountDao(account)
-	if donorID == 0{
-		code := util.GenValidateCode(6)
-		fmt.Printf("验证码为:%v\n:",code)
-		Code[account] = code
-		return nil
-	}else {
-		return errors.New("账号已存在")
-	}
-}
 
 
 //发送验证码

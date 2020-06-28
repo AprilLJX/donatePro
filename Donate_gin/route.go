@@ -14,6 +14,7 @@ func initRouter() *gin.Engine {
 		})
 	}) //http://localhost:9090/
 
+
 	admin := router.Group("/admin")
 	{
 		admin.POST("/login",AdLogin)//http://localhost:9090/admin/login
@@ -22,7 +23,6 @@ func initRouter() *gin.Engine {
 	donor := router.Group("/donor")
 	{
 		donor.POST("/register",DonorRegister)
-		donor.POST("/sendSMS",SendSMS)
 		donor.POST("/login",DonorLogin)
 		donor.POST("/donateList",DonateItem)
 		donor.POST("/addTargerDona",AddTargetDona)
@@ -31,12 +31,18 @@ func initRouter() *gin.Engine {
 	recipient := router.Group("/recipient")
 	{
 		recipient.POST("/login",RecipientLogin)
+		recipient.POST("/register_verify",RecipientVerifyCode)
+		recipient.POST("/register",RecipientRegister)
+
+
 	}
 
 	projects := router.Group("/projects")
 	{
 		projects.GET("/prolist",ProList)
 	}
+
+	router.POST("/sendSMS",SendSMS)
 
 	return router
 }
