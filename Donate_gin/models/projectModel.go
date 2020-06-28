@@ -20,6 +20,7 @@ func GetProList() (prolist []map[string]string,proNum int,err error){
 
 		//将返回的单个项目列表用字典形式存储
 		oneProMap := make(map[string]string)
+		oneProMap["proID"] = string(project.ProId)
 		oneProMap["proName"] = onePro.ProName
 		oneProMap["proIntro"] = onePro.Introduction
 

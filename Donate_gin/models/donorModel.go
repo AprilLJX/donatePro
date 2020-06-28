@@ -18,7 +18,7 @@ func DonorLoginModel(account string,password string)(donormap map[string]string,
 	donormap = make(map[string]string)
 	if password == password_{
 		donor,_ := dao.GetDonorDao(donorID)
-
+		donormap["donor_id"] = string(donorID)
 		donormap["account"] = donor.Account
 		donormap["nickname"] = donor.Nickname
 		donormap["id_number"] = donor.IdNumber
