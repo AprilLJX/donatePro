@@ -2,6 +2,7 @@ package api
 
 import (
 	"Donate_gin/models"
+	//"Donate_gin/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )

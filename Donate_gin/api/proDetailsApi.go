@@ -15,6 +15,13 @@ func ProDetails(c *gin.Context)  {
 	proID, _ := strconv.Atoi(proId)//proID是int
 	prolistPlus,err := models.GetProDetailsModel(proID)
 	prolist,err := dao.GetProDetailsDao(proID)
+	donorIdInfo,err := dao.GetDonationIdDao(proID)
+	donationId := donorIdInfo.DonationId
+	anotherInfo,err := dao.GetDonorIdDao(donationId)
+	donorId := anotherInfo.DonorId
+	donorInfo, err := dao.GetDonorInfoDao(donorId)
+	//donorMoreInfo, err := dao.GetHistoryDonationDao(donorId)
+	//donorInfo,err := dao.GetDonorDao(donorId)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"status" :http.StatusInternalServerError,
@@ -27,6 +34,10 @@ func ProDetails(c *gin.Context)  {
 			"msg":"项目详情如下",
 			"prolist" : prolist,
 			"proListPlus" :prolistPlus,
+			"donorIdInfo":donorIdInfo,
+			"anotherInfo":anotherInfo,
+			"donorInfo":donorInfo,
+			//"donorPersonal":donorMoreInfo,
 		})
 	}
 

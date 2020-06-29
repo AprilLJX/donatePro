@@ -23,6 +23,7 @@ func initRouter() *gin.Engine {
 	{
 		donor.POST("/login",DonorLogin)
 		donor.POST("/donateList",DonateList)
+		donor.POST("/personalCenter",PersonalCenter)
 	}
 	projects := router.Group("/projects")
 	{
