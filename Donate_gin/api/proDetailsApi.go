@@ -21,7 +21,7 @@ func ProDetails(c *gin.Context)  {
 	anotherInfo,err := dao.GetDonorIdDao(donationId)
 	donorId := anotherInfo.DonorId
 	donorInfo, err := dao.GetDonorInfoDao(donorId)
-	//donorMoreInfo, err := dao.GetHistoryDonationDao(donorId)
+	donorMoreInfo, err := dao.GetHistoryDonationDao(donorId)
 	//donorInfo,err := dao.GetDonorDao(donorId)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
@@ -38,7 +38,7 @@ func ProDetails(c *gin.Context)  {
 			"donorIdInfo":donorIdInfo,
 			"anotherInfo":anotherInfo,
 			"donorInfo":donorInfo,
-			//"donorPersonal":donorMoreInfo,
+			"donorPersonal":donorMoreInfo,
 		})
 	}
 
