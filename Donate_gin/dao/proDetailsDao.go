@@ -44,12 +44,20 @@ func GetProDetailsDao(proId int)  (onePro []entity.DonaProject, err error){
 	//}
 	return
 }
-
-func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
-	err = db.DB.QueryRow("SELECT materials, rec_address, introduction, pro_name FROM demand_list WHERE demand_id=?",demandId).Scan(&oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName)
+func GetDemandIdDao(proId int)(oneProPlus entity.DonaProject,err error)  {
+	err = db.DB.QueryRow("SELECT demand_id, pro_id, rec_donation_num FROM dona_project WHERE pro_id=?",proId).Scan(&oneProPlus.DemandId,&oneProPlus.ProId,&oneProPlus.RecDonationNum)
 	return
 }
 
+func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
+	err = db.DB.QueryRow("SELECT materials, rec_address, introduction, pro_name, recipient_id FROM demand_list WHERE demand_id=?",demandId).Scan(&oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName, &oneProPlus.RecipientId)
+	return
+}
+
+func GetCompanyDao(recipientId int)(oneProPlus entity.Recipient,err error)  {
+	err = db.DB.QueryRow("SELECT company, com_category, com_address, id_number, com_profile FROM recipient WHERE recipient_id=?",recipientId).Scan(&oneProPlus.Company,&oneProPlus.ComCategory,&oneProPlus.ComAddress, &oneProPlus.IdNumber, &oneProPlus.ComProfile)
+	return
+}
 //func GetDonationIdDao(proId int)(donation []entity.ProDonation,err error)  {
 //	projects := entity.ProDonation{
 //	}
