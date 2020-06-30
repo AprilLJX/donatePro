@@ -3,6 +3,7 @@ package dao
 import (
 	"Donate_gin/db"
 	"Donate_gin/entity"
+	"errors"
 	"fmt"
 	"log"
 )
@@ -36,4 +37,23 @@ func GetProListDao()  (projectList []entity.DonaProject,err error){
 func GetOneProDao(demandId int)(onePro entity.RePro,err error)  {
 	err = db.DB.QueryRow("SELECT pro_name,introduction FROM demand_list WHERE demand_id=?",demandId).Scan(&onePro.ProName,&onePro.Introduction)
 	return
+}
+
+func AddProject(demandlist int)(demandlistid int,err error)  {
+	sqlStr := "insert into dona_project(demand_id)values (?)"
+	ret, err := db.DB.Exec(sqlStr, demandlist)
+	if err != nil {
+		fmt.Printf("insert failed, err:%v\n", err)
+		return 0,errors.New("insert new donor failed")
+	}
+	demandid, err := ret.LastInsertId() // 新插入数据的id
+	demandlistid = int(demandid)
+	if err != nil {
+		fmt.Printf("get lastinsert ID failed, err:%v\n", err)
+		return
+
+	}
+	return
+
+
 }

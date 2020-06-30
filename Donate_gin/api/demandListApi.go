@@ -16,18 +16,20 @@ func AddDemandlist(c *gin.Context)  {
 	recAddress := c.PostForm("rec_address")
 	cutoff_time := c.PostForm("cut_off_time")
 	emergencyDegree := c.PostForm("emergency_degree")
-	demandID,err := models.AddDemanlistModel(recipientId,proName,introduction,category,materials,recAddress,cutoff_time,emergencyDegree)
+	demandID,proID,err := models.AddDemanlistModel(recipientId,proName,introduction,category,materials,recAddress,cutoff_time,emergencyDegree)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"msg":err.Error(),
 			"status":http.StatusInternalServerError,
 			"demandID":nil,
+			"proId":nil,
 		})
 	}else {
 		c.JSON(http.StatusOK,gin.H{
 			"msg":"新建需求单成功",
 			"status":http.StatusOK,
 			"demandID":demandID,
+			"proId":proID,
 		})
 	}
 }
