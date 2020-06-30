@@ -2,18 +2,24 @@ package models
 
 import (
 	"Donate_gin/dao"
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
 )
 
 //捐赠方登录
-func RecipientLoginModel(account string,password string)(donormap map[string]string,err error)  {
+func RecipientLoginModel(account string,password string)(donormap map[string]interface{},err error)  {
 	donorID ,password_, err := dao.GetDonorPswDao(account)
-	//todo 加密模块
+
+	ctx := md5.New()
+	ctx.Write([]byte(password))
+	password =  hex.EncodeToString(ctx.Sum(nil))
+
 	if err != nil{
 		return
 	}
 
-	donormap = make(map[string]string)
+	donormap = make(map[string]interface{})
 	if password == password_{
 		donor,_ := dao.GetDonorDao(donorID)
 
@@ -36,6 +42,9 @@ func RecipientLoginModel(account string,password string)(donormap map[string]str
 func RecipientRegisterModel(account string,password string,name string,idNumber string,company string,categpry string,creditCode string,address string,profile string) (recipientId int64,err error) {
 
 	//todo 判断公司
+	ctx := md5.New()
+	ctx.Write([]byte(password))
+	password =  hex.EncodeToString(ctx.Sum(nil))
 
 
 	recipientId,err = dao.RecipientRegisterDao(account,password,name,idNumber,company,categpry,creditCode,address,profile)

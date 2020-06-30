@@ -26,7 +26,7 @@ func GetDonorDao(donorID int) (donor entity.Donor,err error) {
 	err = db.DB.QueryRow("SELECT account,nickname,name,id_number,cur_residence,city,avatar,love_value,profile " +
 		"FROM donor WHERE donor_id = ?",donorID).Scan(
 		&donor.Account,&donor.Nickname,&donor.Name,&donor.IdNumber,&donor.CurResidence,&donor.City,&donor.Avatar,&donor.LoveValue,&donor.Profile)
-
+	fmt.Printf("donor:%v\n",donor)
 	return
 }
 

@@ -2,13 +2,19 @@ package models
 
 import (
 	"Donate_gin/dao"
+	"crypto/md5"
+	"encoding/hex"
 	"errors"
 )
 
 //捐赠方登录
 func DonorLoginModel(account string,password string)(donormap map[string]interface{},err error)  {
 	donorID ,password_, err := dao.GetDonorPswDao(account)
-	//todo 加密模块
+
+	ctx := md5.New()
+	ctx.Write([]byte(password))
+	password =  hex.EncodeToString(ctx.Sum(nil))
+
 	if err != nil{
 		return
 	}
@@ -20,11 +26,11 @@ func DonorLoginModel(account string,password string)(donormap map[string]interfa
 		donormap["account"] = donor.Account
 		donormap["nickname"] = donor.Nickname
 		donormap["id_number"] = donor.IdNumber
-		donormap["cur_residence"] = donor.CurResidence
-		donormap["city"] = donor.City
-		donormap["avatar"] = donor.Avatar
+		donormap["cur_residence"] = donor.CurResidence.String
+		donormap["city"] = donor.City.String
+		donormap["avatar"] = donor.Avatar.String
 		donormap["love_value"] = donor.LoveValue
-		donormap["profile"] = donor.Profile
+		donormap["profile"] = donor.Profile.String
 		return
 
 	}else {
@@ -42,8 +48,9 @@ func DonorRegister(account string,code string,pwd string,name string,IdNumber st
 	gencode := Code[account]
 
 	if code == gencode{
-		//todo password加密
-		password := pwd
+		ctx := md5.New()
+		ctx.Write([]byte(pwd))
+		password :=  hex.EncodeToString(ctx.Sum(nil))
 		donationID ,err = dao.AddDonorDao(account,password,name,IdNumber,city)
 		if err!= nil{
 			return 0,err
