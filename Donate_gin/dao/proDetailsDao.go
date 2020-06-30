@@ -44,12 +44,20 @@ func GetProDetailsDao(proId int)  (onePro []entity.DonaProject, err error){
 	//}
 	return
 }
-
-func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
-	err = db.DB.QueryRow("SELECT materials, rec_address, introduction, pro_name FROM demand_list WHERE demand_id=?",demandId).Scan(&oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName)
+func GetDemandIdDao(proId int)(oneProPlus entity.DonaProject,err error)  {
+	err = db.DB.QueryRow("SELECT demand_id, pro_id, rec_donation_num FROM dona_project WHERE pro_id=?",proId).Scan(&oneProPlus.DemandId,&oneProPlus.ProId,&oneProPlus.RecDonationNum)
 	return
 }
 
+func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
+	err = db.DB.QueryRow("SELECT recipient_id, demand_id, materials, rec_address, introduction, pro_name FROM demand_list WHERE demand_id=?",demandId).Scan( &oneProPlus.RecipientId, &oneProPlus.DemandID, &oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName)
+	return
+}
+
+func GetCompanyDao(recipientId int)(oneProPlus entity.Recipient,err error)  {
+	err = db.DB.QueryRow("SELECT name, company, com_category, com_address, id_number, com_profile, recipient_id, credit_code FROM recipient WHERE recipient_id=?",recipientId).Scan(&oneProPlus.Name,&oneProPlus.Company,&oneProPlus.ComCategory,&oneProPlus.ComAddress, &oneProPlus.IdNumber, &oneProPlus.ComProfile,&oneProPlus.RecipientId, &oneProPlus.CreditCode)
+	return
+}
 //func GetDonationIdDao(proId int)(donation []entity.ProDonation,err error)  {
 //	projects := entity.ProDonation{
 //	}
@@ -135,5 +143,21 @@ func GetHistoryRecDao(proId int)(donation entity.DonaProject,err error)  {
 
 func GetProNameDao(demandId int)(oneProPlus entity.DemandList,err error)  {
 	err = db.DB.QueryRow("SELECT materials, rec_address, introduction, pro_name FROM demand_list WHERE demand_id=?",demandId).Scan(&oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName)
+	return
+}
+
+func GetRecipientProsDao(recipientId int)(oneProPlus[] entity.DemandList,err error)  {
+	projects := entity.DemandList{}
+	rows, err := db.DB.Query("SELECT * FROM demand_list WHERE recipient_id=?",recipientId)
+	defer rows.Close()
+	if err != nil {
+		fmt.Println(err)
+	}
+	for rows.Next() {
+		if err := rows.Scan(&projects.DemandID, &projects.RecipientId, &projects.ProName, &projects.Introduction,&projects.Category, &projects.Materials, &projects.IfStandard, &projects.IfAudit,&projects.RecAddress, &projects.CutOffTime,&projects.EmergencyDegree,&projects.InitiationTime ); err != nil {
+			log.Fatal(err)
+		}
+		oneProPlus = append(oneProPlus, projects)
+	}
 	return
 }

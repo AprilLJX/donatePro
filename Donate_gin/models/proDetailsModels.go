@@ -9,10 +9,6 @@ import (
 
 //接收api传来的数据，进行一些逻辑处理
 func GetProDetailsModel(proId int) (prolistPlus []map[string]string,err error) {
-
-	//需求单
-	//受赠方信息
-	//爱心足迹：历史捐赠单信息
 	oneProPlus := entity.DemandList{}
 
 	projectDetails,err := dao.GetProDetailsDao(proId)
@@ -117,6 +113,31 @@ func GetHistoryDonationModel(donorId int) (prolist []map[string]string,err error
 
 		prolist = append(prolist,oneProMap)
 	}
+	return
+
+}
+
+func GetRecipientInfoModel(recipientId int) (prolistPlus []map[string]string,err error) {
+	oneProPlus := entity.DemandList{}
+
+	projectDetails,err := dao.GetRecipientProsDao(recipientId)
+	for _,project := range projectDetails{
+		demandId := project.DemandID
+
+		oneProPlus,err = dao.GetOneProDetailsDao(demandId)
+		oneProPlusMap := make(map[string]string)
+		DemandID := strconv.Itoa(demandId)
+
+		oneProPlusMap["demandId"] = DemandID
+		oneProPlusMap["materials"] = oneProPlus.Materials
+		oneProPlusMap["proName"] = oneProPlus.ProName
+		oneProPlusMap["RecAddress"] = oneProPlus.RecAddress
+		oneProPlusMap["intro"] = oneProPlus.Introduction
+
+		//prolist = append(prolist,oneProMap)
+		prolistPlus = append(prolistPlus,oneProPlusMap)
+	}
+
 	return
 
 }

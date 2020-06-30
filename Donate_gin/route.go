@@ -36,6 +36,8 @@ func initRouter() *gin.Engine {
 		recipient.POST("/register_verify",RecipientVerifyCode)
 		recipient.POST("/register",RecipientRegister)
 		recipient.POST("/addDemandlist",AddDemandlist)
+		recipient.GET("/personalCenter",RecipientInfo)
+
 
 
 
