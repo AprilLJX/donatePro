@@ -23,6 +23,12 @@ func GetRecipientAccountDao(account string) (recipientId int,err error) {
 	return
 }
 
+//获取用户密码，返回到model层进行判断
+func GetRecipientPswDao(account string) (recipientID int,password string,err error) {
+	err = db.DB.QueryRow("SELECT recipient_id,password FROM recipient WHERE account = ?",account).Scan(&recipientID,&password)
+	return
+}
+
 
 func RecipientRegisterDao(account string,password string,name string,idNumber string,company string,categpry string,creditCode string,address string,profile string) (recipientId int64,err error) {
 	sqlStr := "insert into recipient(account,password, name,id_number,company,com_category,credit_code,com_address,com_profile) " +

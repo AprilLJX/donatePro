@@ -9,21 +9,22 @@ import (
 )
 
 func RecipientLogin(c *gin.Context)  {
+
 	account := c.PostForm("account")
 	password := c.PostForm("password")
 
-	donormap,err := models.RecipientLoginModel(account,password)
+	recipientId,err := models.RecipientLoginModel(account,password)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"msg":err.Error(),
 			"status":http.StatusBadRequest,
-			"donor":nil,
+			"recipientId":nil,
 		})
 	}else {
 		c.JSON(http.StatusOK,gin.H{
 			"status":http.StatusOK,
 			"msg":"登录成功",
-			"donor":donormap,
+			"recipientId":recipientId,
 		})
 	}
 }
