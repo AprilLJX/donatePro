@@ -8,7 +8,7 @@ import (
 )
 
 //捐赠方登录
-func DonorLoginModel(account string,password string)(donormap map[string]interface{},err error)  {
+func DonorLoginModel(account string,password string)(donorID int,err error)  {
 	donorID ,password_, err := dao.GetDonorPswDao(account)
 
 	ctx := md5.New()
@@ -19,22 +19,11 @@ func DonorLoginModel(account string,password string)(donormap map[string]interfa
 		return
 	}
 
-	donormap = make(map[string]interface{})
 	if password == password_{
-		donor,_ := dao.GetDonorDao(donorID)
-		donormap["donor_id"] = donorID
-		donormap["account"] = donor.Account
-		donormap["nickname"] = donor.Nickname
-		donormap["id_number"] = donor.IdNumber
-		donormap["cur_residence"] = donor.CurResidence.String
-		donormap["city"] = donor.City.String
-		donormap["avatar"] = donor.Avatar.String
-		donormap["love_value"] = donor.LoveValue
-		donormap["profile"] = donor.Profile.String
-		return
+		return donorID,err
 
 	}else {
-		return nil,errors.New("账号或密码错误")
+		return 0,errors.New("账号或密码错误")
 	}
 
 }

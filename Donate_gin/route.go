@@ -50,6 +50,11 @@ func initRouter() *gin.Engine {
 
 	}
 
+	logistic := router.Group("/logistics")
+	{
+		logistic.GET("/getLogistics",GetLogistics)
+	}
+
 	router.GET("/sendSMS",SendSMS)
 
 	return router
