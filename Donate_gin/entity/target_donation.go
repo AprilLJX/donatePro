@@ -1,5 +1,7 @@
 package entity
 
+import "database/sql"
+
 //定向捐赠单
 type TargetDonation struct {
 	TargetId int
@@ -12,4 +14,6 @@ type TargetDonation struct {
 	MatchPro int //匹配的项目id
 	IfAnonymous int //是否匿名
 	Message string //爱心寄语
+	IfFinish int
+	Reasons sql.NullString
 }

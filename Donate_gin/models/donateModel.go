@@ -2,6 +2,7 @@ package models
 
 import (
 	"Donate_gin/dao"
+	"Donate_gin/entity"
 	"strconv"
 )
 
@@ -24,7 +25,7 @@ func DonateItemModel(donorID int,recipientID int)(donorMap map[string]string, re
 	return
 }
 
-func AddTargetDonaModel(projectId string,donorId string,materials string,message string,cate string,ifAnony string)(donationID int64,err error)  {
+func AddTargetDonaModel(projectId string,donorId string,materials string,message string,cate string,ifAnony string)(donation entity.TargetDonation,err error)  {
 	//todo 随机生成捐赠单号？
 	//materialsList []map[string]string
 	//materials := ""
@@ -42,7 +43,11 @@ func AddTargetDonaModel(projectId string,donorId string,materials string,message
 	category,_ := strconv.Atoi(cate)
 	ifAnonymous,_ := strconv.Atoi(ifAnony)
 
-	donationID ,err = dao.AddTargetDonaDao(projectID,donorID,materials,message,category,ifAnonymous)
+	donationID ,err := dao.AddTargetDonaDao(projectID,donorID,materials,message,category,ifAnonymous)
+
+	dao.NewLogisticsDao(int(donationID))
+
+	donation = dao.OneDonationDao(int(donationID))
 
 	return
 

@@ -41,19 +41,19 @@ func AddTargetDona(c *gin.Context){
 	ifAnonymous := c.PostForm("if_anonymous")
 	category := c.PostForm("category") //物资类别
 
-	donationID, err:=models.AddTargetDonaModel(projectID ,donorID,materials,message ,category ,ifAnonymous )
+	donotion, err:=models.AddTargetDonaModel(projectID ,donorID,materials,message ,category ,ifAnonymous )
 
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"msg":err.Error(),
 			"status":http.StatusInternalServerError,
-			"donotionId":nil,
+			"donotion":nil,
 		})
 	}else {
 		c.JSON(http.StatusOK,gin.H{
 			"msg":"新建捐赠单成功",
 			"status":http.StatusOK,
-			"donotionId":donationID,
+			"donotion":donotion,
 		})
 	}
 
