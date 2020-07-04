@@ -3,7 +3,7 @@ package api
 import (
 	"Donate_gin/dao"
 	"Donate_gin/models"
-	"fmt"
+	//"fmt"
 	"strconv"
 
 	//"fmt"
@@ -15,31 +15,62 @@ func ProDetails(c *gin.Context)  {
 	proId := c.PostForm("pro_id")//proId是string
 	proID, _ := strconv.Atoi(proId)//proID是int
 	demandIdInfo, err := dao.GetDemandIdDao(proID)
+	//proDetails,err := dao.GetProDetailsDao(proID)
 	demandId := demandIdInfo.DemandId
 	recipientIdInfo, err := dao.GetOneProDetailsDao(demandId)
+
+	donorList, participants, err := models.GetDetails(proID)
+	oneProPlus,err := dao.GetOneProDetailsDao(demandId)
+	emergency := oneProPlus.EmergencyDegree
+	Eme := strconv.Itoa(emergency)
+	category := oneProPlus.Category
+	Category := strconv.Itoa(category)
+	Participants := strconv.Itoa(participants)
+	oneProPlusMap := make(map[string]string)
+	oneProPlusMap["proId"] = proId
+	oneProPlusMap["materials"] = oneProPlus.Materials
+	oneProPlusMap["proName"] = oneProPlus.ProName
+	oneProPlusMap["RecAddress"] = oneProPlus.RecAddress
+	oneProPlusMap["intro"] = oneProPlus.Introduction
+	oneProPlusMap["emegency"] = Eme
+	oneProPlusMap["category"] = Category
+	oneProPlusMap["participantsNumber"] = Participants
+
+
+
 	recipiendId := recipientIdInfo.RecipientId
 	recipientInfo, err := dao.GetCompanyDao(recipiendId)
 	recipientMap := make(map[string]string)
 	recipientMap["company"] = recipientInfo.Company
-	recipientMap["com_address"] = recipientInfo.ComAddress
-	recipientMap["category"] = recipientInfo.ComCategory
+	//recipientMap["com_address"] = recipientInfo.ComAddress
+	//recipientMap["category"] = recipientInfo.ComCategory
 	recipientMap["profile"] = recipientInfo.ComProfile
+	//donorList, participants, err := models.GetDetails(proID)
 
-	prolistPlus,err := models.GetProDetailsModel(proID)
-	prolist,err := dao.GetProDetailsDao(proID)
-	donorIdInfo,err := dao.GetDonationIdDao(proID)
-	donationId := donorIdInfo.DonationId
-	donorAnotherInfo,err := dao.GetDonorIdDao(donationId)
-	donorId := donorAnotherInfo.DonorId
-	donorInfo, err := dao.GetDonorInfoDao(donorId)
-	donorIdMap := make(map[string]string)
-	loveValue := donorInfo.LoveValue
-	donorIdMap["loveValue"] = loveValue
-	donorIdMap["name"] = donorInfo.Name
-	donorIdMap["curResidence"] = donorInfo.CurResidence
+	//prolistPlus,err := models.GetProDetailsModel(proID)
 
-	donorMoreInfo, err := dao.GetHistoryDonationDao(donorId)
-	fmt.Println(donorMoreInfo)
+	//proList,err := dao.GetProDetailsDao(proID)
+
+	//donorIdInfo,err := dao.GetDonorForProDao(proID)
+	//for _,donor := range donorIdInfo{
+	//
+	//	donationId := donor.DonationId
+	//	donorAnotherInfo,err := dao.GetDonorIdDao(donationId)
+	//	donorId := donorAnotherInfo.DonorId
+	//	donorInfo, err := dao.GetDonorInfoDao(donorId)
+	//	donorIdMap := make(map[string]string)
+	//	loveValue := donorInfo.LoveValue
+	//	donorIdMap["loveValue"] = loveValue
+	//	donorIdMap["name"] = donorInfo.Name
+	//	donorIdMap["curResidence"] = donorInfo.CurResidence
+	//	donorMoreInfo, err := dao.GetHistoryDonationDao(donorId)
+	//	fmt.Println(donorMoreInfo)
+	//	listPlus = append(prolistPlus,donorIdMap)
+	//}
+
+
+
+
 	//donorInfo,err := dao.GetDonorDao(donorId)
 	if err != nil{
 		c.JSON(http.StatusInternalServerError,gin.H{
@@ -51,12 +82,15 @@ func ProDetails(c *gin.Context)  {
 		c.JSON(http.StatusOK,gin.H{
 			"status" :http.StatusOK,
 			"msg":"项目详情如下",
-			"prolist" : prolist,
-			"proListPlus" :prolistPlus,
-			"donorIdInfo":donorIdInfo,
-			"anotherInfo":donorAnotherInfo,
-			"donorInfo":donorIdMap,
+			//"prolist" : proList,
+			//"proListDetails" :prolistPlus,
+			"proDetails":oneProPlusMap,
+			//"donorIdInfo":donorIdInfo,
+			//"anotherInfo":donorAnotherInfo,
+			//"donorInfo":donorIdMap,
 			"recipientInfo":recipientMap,
+			"donorInfo":donorList,
+
 
 			//"donorPersonal":donorMoreInfo,
 		})

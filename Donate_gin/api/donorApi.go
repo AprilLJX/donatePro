@@ -1,7 +1,6 @@
 package api
 
 import (
-	"Donate_gin/dao"
 	"Donate_gin/models"
 	//"Donate_gin/dao"
 	"github.com/gin-gonic/gin"
@@ -32,8 +31,10 @@ func DonorLogin(c *gin.Context)  {
 func PersonalCenter(c *gin.Context)  {
 	donorId := c.PostForm("donor_id")
 	donorID, _ := strconv.Atoi(donorId)
-	donorInfo, err := dao.GetDonorInfoDao(donorID)
-	donorHistory, err := dao.GetHistoryDonationDao(donorID)
+	//donorInfo, err := dao.GetDonorInfoDao(donorID)
+	//donorHistory, err := dao.GetHistoryDonationDao(donorID)
+
+
 	ProList, err := models.GetHistoryDonationModel(donorID)
 
 	if err != nil{
@@ -46,9 +47,29 @@ func PersonalCenter(c *gin.Context)  {
 		c.JSON(http.StatusOK,gin.H{
 			"status" :http.StatusOK,
 			"msg":"查询成功",
-			"donorInfo": donorInfo,
-			"donorHistory": donorHistory,
-			"proList" :ProList,
+			//"donorInfo": donorInfo,
+			//"donorHistory": donorHistory,
+
+			"DonationHistory" :ProList,
 		})
 	}
+}
+
+func SystemMessage(c *gin.Context)  {
+	proName := c.PostForm("pro_name")
+	date := c.PostForm("date")
+	//donorInfo, err := dao.GetDonorInfoDao(donorID)
+	//donorHistory, err := dao.GetHistoryDonationDao(donorID)
+
+
+
+	c.JSON(http.StatusOK,gin.H{
+		"status" :http.StatusOK,
+		"proName": proName,
+		"date": date,
+		//"donorInfo": donorInfo,
+		//"donorHistory": donorHistory,
+		"message":"项目捐赠意向单已审核通过！请尽快补充物流信息吧！",
+	})
+
 }

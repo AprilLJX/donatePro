@@ -24,11 +24,16 @@ func initRouter() *gin.Engine {
 		donor.POST("/login",DonorLogin)
 		donor.POST("/donateList",DonateList)
 		donor.POST("/personalCenter",PersonalCenter)
+		donor.POST("/messageSuccess",SystemMessage)
 	}
 	projects := router.Group("/projects")
 	{
 		projects.GET("/prolist",ProList)
 		projects.GET("/prodetails",ProDetails)//http://localhost:9090/projects/prodetails
+	}
+	recipient := router.Group("/recipient")
+	{
+		recipient.GET("/personalCenter",RecipientInfo)
 	}
 
 	return router
