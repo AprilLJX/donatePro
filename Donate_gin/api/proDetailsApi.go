@@ -39,8 +39,10 @@ func ProDetails(c *gin.Context)  {
 
 
 	recipiendId := recipientIdInfo.RecipientId
+	RecipientId := strconv.Itoa(recipiendId)
 	recipientInfo, err := dao.GetCompanyDao(recipiendId)
 	recipientMap := make(map[string]string)
+	recipientMap["recipientId"] = RecipientId
 	recipientMap["company"] = recipientInfo.Company
 	//recipientMap["com_address"] = recipientInfo.ComAddress
 	//recipientMap["category"] = recipientInfo.ComCategory

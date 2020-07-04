@@ -16,22 +16,22 @@ import (
 //
 //	projectDetails,err := dao.GetProDetailsDao(proId)
 
-	//for _,project := range projectDetails{
-	//
-	//	demandId := project.DemandId
-	//
-	//	oneProPlus,err = dao.GetOneProDetailsDao(demandId)
-	//	print("Another model:")
-	//	fmt.Println(oneProPlus)
-	//	oneProPlusMap := make(map[string]string)
-	//	oneProPlusMap["materials"] = oneProPlus.Materials
-	//	oneProPlusMap["proName"] = oneProPlus.ProName
-	//	oneProPlusMap["RecAddress"] = oneProPlus.RecAddress
-	//	oneProPlusMap["intro"] = oneProPlus.Introduction
-	//
-	//	//prolist = append(prolist,oneProMap)
-	//	prolistPlus = append(prolistPlus,oneProPlusMap)
-	//}
+//for _,project := range projectDetails{
+//
+//	demandId := project.DemandId
+//
+//	oneProPlus,err = dao.GetOneProDetailsDao(demandId)
+//	print("Another model:")
+//	fmt.Println(oneProPlus)
+//	oneProPlusMap := make(map[string]string)
+//	oneProPlusMap["materials"] = oneProPlus.Materials
+//	oneProPlusMap["proName"] = oneProPlus.ProName
+//	oneProPlusMap["RecAddress"] = oneProPlus.RecAddress
+//	oneProPlusMap["intro"] = oneProPlus.Introduction
+//
+//	//prolist = append(prolist,oneProMap)
+//	prolistPlus = append(prolistPlus,oneProPlusMap)
+//}
 
 //	return
 //

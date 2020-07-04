@@ -79,3 +79,22 @@ func PersonalCenter(c *gin.Context)  {
 		})
 	}
 }
+
+func SystemMessage(c *gin.Context)  {
+	proName := c.PostForm("pro_name")
+	date := c.PostForm("date")
+	//donorInfo, err := dao.GetDonorInfoDao(donorID)
+	//donorHistory, err := dao.GetHistoryDonationDao(donorID)
+
+
+
+	c.JSON(http.StatusOK,gin.H{
+		"status" :http.StatusOK,
+		"proName": proName,
+		"date": date,
+		//"donorInfo": donorInfo,
+		//"donorHistory": donorHistory,
+		"message":"项目捐赠意向单已审核通过！请尽快补充物流信息吧！",
+	})
+
+}

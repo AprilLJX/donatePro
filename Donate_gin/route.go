@@ -27,6 +27,7 @@ func initRouter() *gin.Engine {
 		donor.GET("/donateList",DonateItem)
 		donor.POST("/addTargerDona",AddTargetDona)
 		donor.GET("/personalCenter",PersonalCenter)
+		donor.POST("/messageSuccess",SystemMessage)
 
 	}
 
@@ -37,9 +38,6 @@ func initRouter() *gin.Engine {
 		recipient.POST("/register",RecipientRegister)
 		recipient.POST("/addDemandlist",AddDemandlist)
 		recipient.GET("/personalCenter",RecipientInfo)
-
-
-
 
 	}
 

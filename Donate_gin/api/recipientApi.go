@@ -3,6 +3,7 @@ package api
 import (
 	"Donate_gin/dao"
 	"Donate_gin/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -12,9 +13,18 @@ func RecipientLogin(c *gin.Context)  {
 
 	account := c.PostForm("account")
 	password := c.PostForm("password")
-
+	RecipientId, Password, err:=dao.GetRecipientPswDao(account)
 	recipientId,err := models.RecipientLoginModel(account,password)
-	if err != nil{
+	recipientInfo, err := dao.GetCompanyDao(RecipientId)
+	//recipientInfo, err := dao.GetCompanyDao(recipiendId)
+	recipientMap := make(map[string]string)
+	recipientMap["company"] = recipientInfo.Company
+	recipientMap["com_address"] = recipientInfo.ComAddress
+	recipientMap["category"] = recipientInfo.ComCategory
+	recipientMap["profile"] = recipientInfo.ComProfile
+	fmt.Println(Password)
+	fmt.Println(recipientId)
+	if err != nil {
 		c.JSON(http.StatusInternalServerError,gin.H{
 			"msg":err.Error(),
 			"status":http.StatusBadRequest,
@@ -24,7 +34,8 @@ func RecipientLogin(c *gin.Context)  {
 		c.JSON(http.StatusOK,gin.H{
 			"status":http.StatusOK,
 			"msg":"登录成功",
-			"recipientId":recipientId,
+			"recipientId":RecipientId,
+			"recipientInfo": recipientMap,
 		})
 	}
 }
@@ -97,8 +108,8 @@ func RecipientInfo(c *gin.Context)  {
 		c.JSON(http.StatusOK,gin.H{
 			"status" :http.StatusOK,
 			"msg":"查询成功",
-			"recipientInfo": recipientMap,
-			"info":recipientInfo,
+			//"recipientInfo": recipientMap,
+			//"info":recipientInfo,
 			"proList" :prolist,
 		})
 	}
