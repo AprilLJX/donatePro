@@ -5,6 +5,7 @@ import (
 	"Donate_gin/entity"
 	"fmt"
 	"log"
+	"strconv"
 
 	//"log"
 )
@@ -18,20 +19,10 @@ import (
 //
 //}
 
-func GetProDetailsDao(proId int)  (onePro []entity.DonaProject, err error){
+func GetProDetailsDao(proId int)  (projects entity.DonaProject, err error){
 
-	projects := entity.DonaProject{
 
-	}
-
-	rows := db.DB.QueryRow("SELECT * FROM dona_project WHERE pro_id=?",proId)
-	//defer rows.Close()
-	if err1 := rows.Scan(&projects.ProId, &projects.DemandId, &projects.RecDonationNum, &projects.IfEnd); err1 != nil {
-		log.Fatal(err1)
-	}
-	onePro = append(onePro,projects)
-
-	fmt.Println(rows)
+	err = db.DB.QueryRow("SELECT pro_id, demand_id, rec_donation_num, if_end FROM dona_project WHERE pro_id=?",proId).Scan(&projects.ProId, &projects.DemandId, &projects.RecDonationNum, &projects.IfEnd);
 
 
 	//for rows.Next() {
@@ -50,7 +41,7 @@ func GetDemandIdDao(proId int)(oneProPlus entity.DonaProject,err error)  {
 }
 
 func GetOneProDetailsDao(demandId int)(oneProPlus entity.DemandList,err error)  {
-	err = db.DB.QueryRow("SELECT recipient_id, demand_id, materials, rec_address, introduction, pro_name FROM demand_list WHERE demand_id=?",demandId).Scan( &oneProPlus.RecipientId, &oneProPlus.DemandID, &oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName)
+	err = db.DB.QueryRow("SELECT emergency_degree, recipient_id, demand_id, materials, rec_address, introduction, pro_name, category FROM demand_list WHERE demand_id=?",demandId).Scan( &oneProPlus.EmergencyDegree,&oneProPlus.RecipientId, &oneProPlus.DemandID, &oneProPlus.Materials,&oneProPlus.RecAddress,&oneProPlus.Introduction, &oneProPlus.ProName, &oneProPlus.Category)
 	return
 }
 
@@ -77,6 +68,31 @@ func GetDonationIdDao(proId int)(donation entity.ProDonation,err error)  {
 	return
 }
 
+func GetDonorForProDao(proId int)(donorList[] entity.ProDonation,err error)  {
+
+	donors := entity.ProDonation{
+
+	}
+
+	rows, err := db.DB.Query("SELECT * FROM project_donation WHERE project_id = ?",proId)
+	defer rows.Close()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for rows.Next() {
+		if err1 := rows.Scan(&donors.Id, &donors.ProjectId, &donors.DonationId); err1 != nil {
+			log.Fatal(err1)
+		}
+
+		donorList = append(donorList,donors)
+
+	}
+	fmt.Println(donorList)
+	return
+}
+
 //func GetDonorIdDao(targetId int)(oneProPlus []entity.TargetDonation,err error)  {
 //	projects := entity.TargetDonation{
 //	}
@@ -96,9 +112,15 @@ func GetDonorIdDao(targetId int)(target entity.TargetDonation,err error)  {
 	return
 }
 
+func GetDonorIdforProDao(donorId int)(target entity.TargetDonation,err error)  {
+
+	err = db.DB.QueryRow("SELECT target_id,donor_id,if_standard,if_audit,category,message,donate_time,donate_materials,match_pro,if_anonymous FROM target_donation WHERE target_id=?",donorId).Scan(&target.TargetId,&target.DonorId,&target.IfStandard,&target.IfAudit,&target.Category,&target.Message,&target.DonateTime,&target.DonateMaterials,&target.MatchPro,&target.IfAnonymous)
+	return
+}
+
 func GetDonorInfoDao(donorId int) (donor entity.Donor,err error) {
 
-	err = db.DB.QueryRow("SELECT donor_id,account,password,id_number,love_value,nickname,name,cur_residence,city,avatar,profile FROM donor WHERE donor_id = ?",donorId).Scan(&donor.DonorID,&donor.Account,&donor.Password,&donor.IdNumber,&donor.LoveValue,&donor.Nickname,&donor.Name,&donor.CurResidence,&donor.City,&donor.Avatar,&donor.Profile)
+	err = db.DB.QueryRow("SELECT donor_id,account,id_number,love_value,nickname,name,cur_residence,city,avatar,profile FROM donor WHERE donor_id = ?",donorId).Scan(&donor.DonorID,&donor.Account,&donor.IdNumber,&donor.LoveValue,&donor.Nickname,&donor.Name,&donor.CurResidence,&donor.City,&donor.Avatar,&donor.Profile)
 
 	return
 }
@@ -121,10 +143,41 @@ func GetHistoryDonationDao(donorId int)  (projectList []entity.TargetDonation,er
 			log.Fatal(err1)
 		}
 
+
 		projectList = append(projectList,projects)
 
 	}
 	fmt.Println(projectList)
+	return
+}
+
+func GetHistoryDoDao(donorId int)  (donationList []map[string]string,err error){
+
+	projects := entity.TargetDonation{
+
+	}
+
+	rows, err := db.DB.Query("SELECT * FROM target_donation WHERE donor_id = ?",donorId)
+	defer rows.Close()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for rows.Next() {
+		if err1 := rows.Scan(&projects.TargetId,&projects.DonorId,&projects.Category, &projects.DonateMaterials, &projects.IfStandard, &projects.IfAudit,&projects.DonateTime,&projects.MatchPro,&projects.IfAnonymous,&projects.Message); err1 != nil {
+			log.Fatal(err1)
+		}
+		oneProMap := make(map[string]string)
+		targetId := projects.TargetId
+		TargetId := strconv.Itoa(targetId)
+		oneProMap["targetId"] = TargetId
+
+
+		donationList = append(donationList,oneProMap)
+
+	}
+	fmt.Println(donationList)
 	return
 }
 
