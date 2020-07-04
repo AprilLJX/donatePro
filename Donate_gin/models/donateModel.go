@@ -4,6 +4,7 @@ import (
 	"Donate_gin/dao"
 	"Donate_gin/entity"
 	"strconv"
+	"strings"
 )
 
 func DonateItemModel(donorID int,recipientID int)(donorMap map[string]string, recipientMap map[string]string) {
@@ -25,7 +26,7 @@ func DonateItemModel(donorID int,recipientID int)(donorMap map[string]string, re
 	return
 }
 
-func AddTargetDonaModel(projectId string,donorId string,materials string,message string,cate string,ifAnony string)(donation entity.TargetDonation,err error)  {
+func AddTargetDonaModel(projectId string,donorId string,materials string,message string,cate string,ifAnony string)(donation entity.TargetDonation,materiallist []map[string]interface{},err error)  {
 	//todo 随机生成捐赠单号？
 	//materialsList []map[string]string
 	//materials := ""
@@ -48,6 +49,21 @@ func AddTargetDonaModel(projectId string,donorId string,materials string,message
 	dao.NewLogisticsDao(int(donationID))
 
 	donation = dao.OneDonationDao(int(donationID))
+
+	materialStr := donation.DonateMaterials
+	malist := strings.Split(materialStr , ";")
+	for index,ma := range malist{
+		if index < len(malist)-1{
+			material := make(map[string]interface{})
+			one := strings.Split(ma , ":")
+			material["type"] = one[0]
+			material["num"] = one[1]
+			materiallist = append(materiallist, material)
+		}
+
+
+	}
+
 
 	return
 
