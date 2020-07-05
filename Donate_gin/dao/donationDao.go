@@ -2,6 +2,7 @@ package dao
 
 import (
 	"Donate_gin/db"
+	"Donate_gin/entity"
 	"errors"
 	"fmt"
 	"time"
@@ -27,5 +28,17 @@ func AddTargetDonaDao(projectID int,donorID int,materials string,message string,
 
 	return
 
+
+}
+
+func OneDonationDao(donationId int) (donation entity.TargetDonation) {
+	sqlStr := "select * from target_donation where target_id=?"
+	// 非常重要：确保QueryRow之后调用Scan方法，否则持有的数据库链接不会被释放
+	err := db.DB.QueryRow(sqlStr, donationId).Scan(&donation.TargetId,&donation.DonorId,&donation.Category,&donation.DonateMaterials,&donation.IfStandard,&donation.IfAudit,&donation.DonateTime,&donation.MatchPro,&donation.IfAnonymous,&donation.Message,&donation.IfFinish,&donation.Reasons)
+	if err != nil {
+		fmt.Printf("scan failed, err:%v\n", err)
+		return
+	}
+	return donation
 
 }
