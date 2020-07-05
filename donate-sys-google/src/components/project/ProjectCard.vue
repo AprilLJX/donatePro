@@ -11,15 +11,15 @@
           <el-col :span="12">
             <div style="margin: 5%;">
               <div class="need_staff" style="text-align: left">
-                <p class="project_name">{{project_detail.name}}</p>
+                <p class="project_name">{{project_detail.proName}}</p>
                 <p class="project_info">
                       <span>
                         <i class="el-icon-location" style="color: red"></i>
-                        {{project_detail.place}}
+                        {{project_detail.RecAddress}}
                       </span>
                 </p>
                 <p class="project_info">
-                  <span>{{'发起方： '+project_detail.demander.name}}</span>
+                  <span>{{'发起方： '+project_detail.demander}}</span>
                 </p>
                 <p class="project_info">
                       <span>
@@ -28,13 +28,10 @@
                       </span>
                 </p>
                 <p class="project_info">
-                  <span>{{"参与度： "+project_detail.receive_times +" 人次"}}</span>
+                  <span>{{"参与度： "+project_detail.participantsNumber +" 人次"}}</span>
                 </p>
-                <li v-for="item in project_detail.demande_list.medical" style="color: crimson;line-height: 20px">
-                  <span>{{item.name+': '+ item.needy_amount+' '+ item.scal}}</span>
-                </li>
-                <li v-for="item in project_detail.demande_list.daliy" style="color: crimson;line-height: 20px">
-                  <span>{{item.name+': '+ item.needy_amount+' '+ item.scal}}</span>
+                <li v-for="item in project_detail.materials" style="color: crimson;line-height: 20px">
+                  <span>{{item}}</span>
                 </li>
               </div>
             </div>

@@ -200,8 +200,7 @@ export default {
 
     this.navi_info.now_place = this.project_detail.proName
 
-    this.project_detail.demander_name = this.demander_info.company
-    // this.project_detail.demander_id = this.demander_info.id
+    this.project_detail.demander = this.demander_info.company
     // this.getParams()
     console.log('this.navi_info', this.navi_info)
 

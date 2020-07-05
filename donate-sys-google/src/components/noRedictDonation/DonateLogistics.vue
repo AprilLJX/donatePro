@@ -1,101 +1,151 @@
 <template>
-  <el-row :gutter="20">
-    <el-col :span="24">
-      <div class="grid-content" style="width: 1440px;background: lightpink;height: 80px;line-height: 80px;">
-        <el-col :span="12" :offset="3">
-<!--          <el-breadcrumb class="app-breadcrumb" separator="/">-->
-<!--            <transition-group name="breadcrumb">-->
-<!--              <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">-->
-<!--                <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>-->
-<!--                <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>-->
-<!--              </el-breadcrumb-item>-->
-<!--            </transition-group>-->
-<!--          </el-breadcrumb>-->
-          <el-breadcrumb separator="/" style="line-height: 80px" >
-            <el-breadcrumb-item v-for="i in navi_info.navi_list" :key="i.path" :to="{ path: i.path }">{{i.name}}</el-breadcrumb-item>
-            <el-breadcrumb-item >{{navi_info.now_place}}</el-breadcrumb-item>
+  <div>
+    <el-header>
+      <MainTop :header_info="header_info"></MainTop>
+    </el-header>
+    <!--如果有物流信息则显示当前物流情况，如无，则输入物流信息-->
+    <el-main style="width:1440px;background:#F1F1F1">
+      <ProjectCard :project_detail="project_info"></ProjectCard>
+      <el-row style="margin-top: 5%">
+        <el-col :span="18" :offset="3">
+          <div style="background: white;text-align: left">
+            <div style="padding: 5%">
+              <div v-if="if_logistics">
+                <div>
+                  <p class="demander_detail">物流进度</p>
+                  <p class="demander_info">物流公司&nbsp;&nbsp;&nbsp;{{logistics.company}}</p>
+                  <p class="demander_info">物流单号&nbsp;&nbsp;&nbsp;{{logistics.id}}</p>
+                  <div class="block" style="padding: 5%">
+                    <el-timeline>
+                      <el-timeline-item
+                        v-for="(activity, index) in logistics_info"
+                        :key="index"
+                        :icon="activity.icon"
+                        :type="activity.type"
+                        :color="activity.color"
+                        :size="activity.size"
+                        :timestamp="activity.timestamp">
+                        {{activity.content}}
+                      </el-timeline-item>
+                    </el-timeline>
+                  </div>
+                </div>
 
-            <!--            <el-breadcrumb-item @click="gotoPage(i.path)">{{i.name}}</el-breadcrumb-item>-->
-          </el-breadcrumb>
-        </el-col>
-        <el-col :span="6">
-          <div class="grid-content bg-purple" style="height: 80px;" v-if="navi_info.if_searchBar">
-            <el-autocomplete v-model="state" :fetch-suggestions="querySearchAsync" placeholder="请输入内容"
-                             @select="handleSelect">
-              <i class="el-icon-search el-input__icon" slot="suffix" @click="handleSelect">
-              </i>
-            </el-autocomplete>
+                <div style="margin-bottom: 3%;text-align: center">
+                  <el-button type="danger" round @click="gotoPresonalCenter">进入个人中心</el-button>
+                </div>
+              </div>
+
+              <div v-else="">
+                <el-row style="text-align: center">
+                  <div style="text-align: left;padding-bottom: 5%">
+                    <p class="demander_detail">物流信息录入</p>
+                  </div>
+                  <p class="demander_info" >物流公司</p>
+                  <el-autocomplete
+                    class="inline-input"
+                    v-model="logistics.company"
+                    :fetch-suggestions="querySearch"
+                    placeholder="请输入内容"
+                    @select="handleSelect"
+                  ></el-autocomplete>
+                  <p class="demander_info">物流单号</p>
+                  <el-input
+                    placeholder="请输入物流单号"
+                    v-model="logistics.id"
+                    clearable style="width: auto">
+                  </el-input>
+                </el-row>
+
+                <div style="padding: 3%;text-align: center">
+                  <el-button type="danger" round @click="submitLogistics">提交物流信息</el-button>
+                </div>
+              </div>
+
+            </div>
           </div>
         </el-col>
-      </div>
-    </el-col>
-  </el-row>
+      </el-row>
+    </el-main>
+    <el-footer>
+      <MainBottom></MainBottom>
+    </el-footer>
+  </div>
 </template>
 
 <script>
+import MainTop from "../MainTop";
+import MainBottom from "../MainBottom";
+import SearchBar from "../SearchBar";
+import ProjectCard from "../project/ProjectCard"
+
 export default {
-  name: "SearchBar",
-  props:{
-    navi_info: {
-      type: Object,//type为Array,default为函数
-      default() {
-      }
-    },
-  },
+  components: {MainTop, MainBottom, SearchBar, ProjectCard},
+  name: "DonateLogistics",
   data() {
     return {
+      header_info:{
+        height_line:-1,
+        if_logo: false,
+        user_type: '0', // 0 is donator, 1 is reciver
+        if_show_navi:false
+      },
+      if_logistics: false,
+      logistics: {
+        company: '韵达快递',
+        id: '242425325265343'
+      },
+      logistics_info: [
+        {
+          content: '支持使用图标',
+          timestamp: '2018-04-12 20:46',
+          size: 'large',
+          type: 'primary',
+          icon: 'el-icon-more'
+        }, {
+          content: '支持自定义颜色',
+          timestamp: '2018-04-03 20:46',
+          color: '#0bbd87'
+        }, {
+          content: '支持自定义尺寸',
+          timestamp: '2018-04-03 20:46',
+          size: 'large'
+        }, {
+          content: '默认样式的节点',
+          timestamp: '2018-04-03 20:46'
+        }],
       restaurants: [],
-      state: '',
-      timeout: null,
-      levelList: null,
-    };
-  },
-  watch: {
-    $route() {
-      this.getBreadcrumb()
+      state1: '',
+      state2: ''
     }
   },
   created() {
-    this.getBreadcrumb()
-    console.log('search bar!')
-    console.log(this.navi_info)
+    this.getParams()
+    console.log(this.donater_info)
   },
   methods: {
-    // gotoPage(path){
-    //   console.log(path)
-    // },
-    getBreadcrumb() {
-      // only show routes with meta.title
-      let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
-      const first = matched[0]
-
-      if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: '首页' }}].concat(matched)
-      }
-
-      this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
+    getParams() {
+      // 取到路由带过来的参数
+      console.log(this.$route.params)
+      const routerParams = this.$route.params.jum
+      console.log('准备数据中。。。。。')
+      // 将数据放在当前组件的数据内
+      this.donater_info = routerParams.donater_info;
+      this.project_info = routerParams.project_info;
+      this.header_info = routerParams.header_info
+      console.log('数据已准备好！')
     },
-    isDashboard(route) {
-      const name = route && route.name
-      if (!name) {
-        return false
-      }
-      return name.trim().toLocaleLowerCase() === 'Dashboard'.toLocaleLowerCase()
+    querySearch(queryString, cb) {
+      var restaurants = this.restaurants;
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+      // 调用 callback 返回建议列表的数据
+      cb(results);
     },
-    pathCompile(path) {
-      const { params } = this.$route
-      var toPath = pathToRegexp.compile(path)
-      return toPath(params)
+    createFilter(queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+      };
     },
-    handleLink(item) {
-      const { redirect, path } = item
-      if (redirect) {
-        this.$router.push(redirect)
-        return
-      }
-      this.$router.push(this.pathCompile(path))
-    },
-
     loadAll() {
       return [
         {"value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号"},
@@ -148,31 +198,16 @@ export default {
         {"value": "南拳妈妈龙虾盖浇饭", "address": "普陀区金沙江路1699号鑫乐惠美食广场A13"}
       ];
     },
-
-    querySearchAsync(queryString, cb) {
-      var restaurants = this.restaurants;
-      var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => {
-        cb(results);
-      }, 3000 * Math.random());
-    },
-
-    createStateFilter(queryString) {
-      return (state) => {
-        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-      };
-    },
-
     handleSelect(item) {
       console.log(item);
     },
-
-    gotoProjectDetail(i) {
-      //直接跳转
-      window.console.log("查询成功", i);
-      this.$router.push('/projectDetail');
+    gotoPresonalCenter() {
+      this.$router.push('/Maincontrol');
+    },
+    submitLogistics(){
+      console.log(this.logistics);
+      // 如果提交成功则修改if_logistics
+      this.if_logistics = true
     }
   },
   mounted() {
@@ -182,23 +217,14 @@ export default {
 </script>
 
 <style scoped>
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+  .project_info > span {
+    margin-right: 10px;
+    text-align: center;
   }
 
-  .item {
-    margin-bottom: 18px;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-
-  .clearfix:after {
-    clear: both
+  .demander_detail {
+    font-size: 20px;
+    line-height: 23px;
   }
 
 </style>
