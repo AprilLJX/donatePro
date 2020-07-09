@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h2 class="title">谷粒酬 后台管理</h2>
+        <h2 class="title">谷粒捐 后台管理</h2>
         <h3 class="title">登陆</h3>
       </div>
 

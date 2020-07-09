@@ -174,8 +174,9 @@
 /*card*/
 .card{
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 400px;
+  padding: 5%;
 }
 .card .card_info{
   display: inline-block;
@@ -185,7 +186,7 @@
 }
 .card .card_img{
   display: flex !important;
-  width: 60% !important;
+  width: 50% !important;
 }
 .card_img .image-wrapper .wrapper{
   top:auto !important;
