@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 04/07/2020 22:47:55
+ Date: 05/07/2020 00:19:51
 */
 
 SET NAMES utf8mb4;
@@ -114,10 +114,10 @@ CREATE TABLE `donor` (
 -- Records of donor
 -- ----------------------------
 BEGIN;
-INSERT INTO `donor` VALUES (1, '15248156657', 'e10adc3949ba59abbe56e057f20f883e', 'alice', 'alice', '123456', '北京', '北京', NULL, '100', NULL);
-INSERT INTO `donor` VALUES (2, '123457', 'e10adc3949ba59abbe56e057f20f883e', 'bob', 'bob', '123457', '湖南长沙', '长沙', NULL, '100', NULL);
-INSERT INTO `donor` VALUES (3, '123458', 'e10adc3949ba59abbe56e057f20f883e', 'cindy', 'cindy', '123458', NULL, NULL, NULL, '100', NULL);
-INSERT INTO `donor` VALUES (5, '15387594632', 'e10adc3949ba59abbe56e057f20f883e', '赵', '刘', '122122122212221222', NULL, '武汉', NULL, '100', NULL);
+INSERT INTO `donor` VALUES (1, '15248156657', 'e10adc3949ba59abbe56e057f20f883e', 'alice', 'alice', '123456', '北京', '北京', NULL, '100', '献出一点爱心。');
+INSERT INTO `donor` VALUES (2, '123457', 'e10adc3949ba59abbe56e057f20f883e', 'bob', 'bob', '123457', '湖南长沙', '长沙', NULL, '100', '献出一点爱心。');
+INSERT INTO `donor` VALUES (3, '123458', 'e10adc3949ba59abbe56e057f20f883e', 'cindy', 'cindy', '123458', '北京', '北京', NULL, '100', '献出一点爱心。');
+INSERT INTO `donor` VALUES (5, '15387594632', 'e10adc3949ba59abbe56e057f20f883e', '赵', '刘', '122122122212221222', '武汉', '武汉', NULL, '100', '献出一点爱心。');
 COMMIT;
 
 -- ----------------------------
