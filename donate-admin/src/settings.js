@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '谷粒酬 后台管理系统',
+  title: '谷粒捐 后台管理系统',
 
   /**
    * @type {boolean} true | false
